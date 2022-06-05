@@ -1,4 +1,4 @@
-namespace Coati.GameName.Enums
+namespace Zerosum.PlatformRunner.Enums
 {
     public enum ComparerType
     {

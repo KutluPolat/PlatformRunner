@@ -26,7 +26,7 @@ public class EventManager : MonoBehaviour
     #region Variables
 
     [BoxGroup("Is Event Debugs On"), SerializeField]
-    private bool _state, _button, _movement;
+    private bool _state, _button, _movement, _stack, _exchange;
 
     #endregion // Variables
 
@@ -35,6 +35,8 @@ public class EventManager : MonoBehaviour
     public delegate void State();
     public delegate void Button();
     public delegate void Movement();
+    public delegate void StackableDelegate(StackableController stackable);
+    public delegate void ExchangeDelegate(Stackable exchangedStackable);
 
     #endregion // Delegates
 
@@ -43,10 +45,35 @@ public class EventManager : MonoBehaviour
     public event State StateTapToPlay, StateInGame, StateEndingSequence, StateLevelSuccess, StateLevelFailed, StateLevelEnd;
     public event Button PressedNextLevel, PressedRestart;
     public event Movement MovementBlocked, MovementUnblocked;
+    public event StackableDelegate StackCollected, StackTouchedToTheObstacle;
+    public event ExchangeDelegate StackableExchanged;
 
     #endregion // Events
 
     #region Methods
+
+    #region Exchange
+
+    public void OnStackableExchanged(Stackable exchangedStackable)
+    {
+        EventTrigger(exchangedStackable, StackableExchanged, "OnStackableExchanged");
+    }
+
+    #endregion // Exchange
+
+    #region Stacks
+
+    public void OnStackTouchedToTheObstacle(StackableController stack)
+    {
+        EventTrigger(stack, StackTouchedToTheObstacle, "OnStackTouchedToTheObstacle");
+    }
+
+    public void OnStackCollected(StackableController stack)
+    {
+        EventTrigger(stack, StackCollected, "OnStackCollected");
+    }
+
+    #endregion // Stacks
 
     #region Movement
 
@@ -117,6 +144,24 @@ public class EventManager : MonoBehaviour
 
     #region EventTriggers
 
+    private void EventTrigger(Stackable exchangedStackable, ExchangeDelegate exchangeEvent, string methodName)
+    {
+        if(exchangeEvent != null)
+        {
+            LogIfActive(_exchange, methodName);
+            exchangeEvent(exchangedStackable);
+        }
+    }
+
+    private void EventTrigger(StackableController stackable, StackableDelegate stackableEvent, string methodName)
+    {
+        if(stackableEvent != null)
+        {
+            LogIfActive(_stack, methodName);
+            stackableEvent(stackable);
+        }
+    }
+
     private void EventTrigger(Movement movementEvent, string methodName)
     {
         if (movementEvent != null)
@@ -155,5 +200,6 @@ public class EventManager : MonoBehaviour
     }
 
     #endregion // EventTriggers
+
     #endregion // Methods
 }

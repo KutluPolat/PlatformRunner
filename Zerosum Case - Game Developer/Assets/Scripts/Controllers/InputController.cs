@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Coati.GameName.Enums;
+using Zerosum.PlatformRunner.Enums;
 
 public class InputController : MonoBehaviour
 {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Coati.GameName.Enums;
+using Zerosum.PlatformRunner.Enums;
 
 public class GameManager : MonoBehaviour, IEvents
 {
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour, IEvents
 
     #region Variables
 
+    public const int NumOfStackableType = 3;
     public float FeedbackLimitDuration = 0.05f;
     public bool IsSuccess { get; set; }
     private GameState _currentGameState;

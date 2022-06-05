@@ -1,4 +1,4 @@
-using Coati.GameName.Enums;
+using Zerosum.PlatformRunner.Enums;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
