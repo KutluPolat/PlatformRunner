@@ -7,7 +7,7 @@ public static class SaveSystemBinary<T>
 {
 #pragma warning disable CS0162 // Unreachable code detected warning disabled
 
-    private const string EXTENSION_NAME = "gamename";
+    private const string EXTENSION_NAME = "platformrunner";
     private const bool IS_SAVE_SYSTEM_ON = true;
 
     public static void Save(string name, T value)

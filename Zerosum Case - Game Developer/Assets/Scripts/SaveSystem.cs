@@ -26,11 +26,25 @@ public class SaveSystem : MonoBehaviour
         set { SaveSystemBinary<int>.Save("Level", value); }
     }
 
-    public int TotalGold
+    public float TotalGold
     {
-        get { return SaveSystemBinary<int>.Load("TotalGold", 0); }
-        set { SaveSystemBinary<int>.Save("TotalGold", value); }
+        get { return SaveSystemBinary<float>.Load("TotalGold", 0); }
+        private set { SaveSystemBinary<float>.Save("TotalGold", value); }
     }
 
     #endregion // Variables
+
+    #region Methods
+
+    public void AddGold(float value)
+    {
+        TotalGold += value;
+
+        if (value > 0)
+            EventManager.Instance.OnGoldCollected();
+        else
+            EventManager.Instance.OnGoldLost();
+    }
+
+    #endregion // Methods
 }

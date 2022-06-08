@@ -761,7 +761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8123834987179258315, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
       propertyPath: _vertDist
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8123834987179258315, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
       propertyPath: _lerpSpeed

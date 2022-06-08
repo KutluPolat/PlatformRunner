@@ -25,7 +25,6 @@ public class MovementController : Movement
     private void LateUpdate()
     {
         ClampMovement();
-        ConsoleProDebug.Watch("Current Movement State: ", _currentMovementState.ToString());
     }
 
     #region Methods

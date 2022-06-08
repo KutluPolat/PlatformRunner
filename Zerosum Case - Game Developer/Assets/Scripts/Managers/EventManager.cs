@@ -26,7 +26,7 @@ public class EventManager : MonoBehaviour
     #region Variables
 
     [BoxGroup("Is Event Debugs On"), SerializeField]
-    private bool _state, _button, _movement, _stack, _exchange;
+    private bool _state, _button, _movement, _stack, _exchange, _gold;
 
     #endregion // Variables
 
@@ -37,6 +37,7 @@ public class EventManager : MonoBehaviour
     public delegate void Movement();
     public delegate void StackableDelegate(StackableController stackable);
     public delegate void ExchangeDelegate(Stackable exchangedStackable);
+    public delegate void GoldDelegate();
 
     #endregion // Delegates
 
@@ -47,10 +48,32 @@ public class EventManager : MonoBehaviour
     public event Movement MovementBlocked, MovementUnblocked;
     public event StackableDelegate StackCollected, StackTouchedToTheObstacle;
     public event ExchangeDelegate StackableExchanged;
+    public event GoldDelegate GoldCollected, GoldUpdated, GoldLost;
 
     #endregion // Events
 
     #region Methods
+
+    #region Gold
+
+    private void OnGoldUpdated()
+    {
+        EventTrigger(GoldUpdated, "OnGoldUpdated");
+    }
+
+    public void OnGoldLost()
+    {
+        EventTrigger(GoldLost, "OnGoldLost");
+        OnGoldUpdated();
+    }
+
+    public void OnGoldCollected()
+    {
+        EventTrigger(GoldCollected, "OnGoldCollected");
+        OnGoldUpdated();
+    }
+
+    #endregion // Gold
 
     #region Exchange
 
@@ -143,6 +166,15 @@ public class EventManager : MonoBehaviour
     #endregion // State
 
     #region EventTriggers
+
+    private void EventTrigger(GoldDelegate goldEvent, string methodName)
+    {
+        if(goldEvent != null)
+        {
+            LogIfActive(_gold, methodName);
+            goldEvent();
+        }
+    }
 
     private void EventTrigger(Stackable exchangedStackable, ExchangeDelegate exchangeEvent, string methodName)
     {

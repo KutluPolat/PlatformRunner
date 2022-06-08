@@ -42,11 +42,6 @@ public class GameManager : MonoBehaviour, IEvents
 
     #endregion // Start
 
-    private void Update()
-    {
-        ConsoleProDebug.Watch("Game State: ", _currentGameState.ToString());
-    }
-
     #region StateControls
 
     public void SetGameStateTo(GameState newState) => _currentGameState = newState;

@@ -23,6 +23,7 @@ public class UIController : MonoBehaviour, IEvents
     {
         SubscribeEvents();
         OpenTapToPlayPanel();
+        UpdateGoldText();
     }
 
     #endregion // Start
@@ -40,6 +41,11 @@ public class UIController : MonoBehaviour, IEvents
     private void UpdateLevelText()
     {
         _levelText.text = "Level " + SaveSystem.Instance.CurrentLevel;
+    }
+
+    private void UpdateGoldText()
+    {
+        _goldText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.TotalGold)}$";
     }
 
     #endregion // Texts
@@ -114,6 +120,8 @@ public class UIController : MonoBehaviour, IEvents
         EventManager.Instance.StateInGame += OpenInGamePanel;
         EventManager.Instance.StateLevelSuccess += () => { StartCoroutine(DelayOpenLevelSuccess()); };
         EventManager.Instance.StateLevelFailed += () => { StartCoroutine(DelayOpenLevelFail()); };
+
+        EventManager.Instance.GoldUpdated += UpdateGoldText;
     }
 
     public void UnsubscribeEvents()
@@ -122,6 +130,8 @@ public class UIController : MonoBehaviour, IEvents
         EventManager.Instance.StateInGame -= OpenInGamePanel;
         EventManager.Instance.StateLevelSuccess -= () => { StartCoroutine(DelayOpenLevelSuccess()); };
         EventManager.Instance.StateLevelFailed -= () => { StartCoroutine(DelayOpenLevelFail()); };
+
+        EventManager.Instance.GoldUpdated -= UpdateGoldText;
     }
 
     public void OnDestroy()
