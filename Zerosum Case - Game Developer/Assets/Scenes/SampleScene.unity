@@ -878,11 +878,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876154, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1e-45
+      value: -3e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876154, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876157, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_Follow
@@ -894,16 +894,24 @@ PrefabInstance:
       objectReference: {fileID: 1782444530}
     - target: {fileID: 1679991405730531186, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1e-45
+      value: -3e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405730531186, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 1e-45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679991405730531187, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_UpdateMethod
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405878575758, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: _movementController
       value: 
       objectReference: {fileID: 1782444531}
+    - target: {fileID: 2659182074378258329, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: _vertDist
+      value: 2.49
+      objectReference: {fileID: 0}
     - target: {fileID: 2659182074378258329, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: _carryPoint
       value: 

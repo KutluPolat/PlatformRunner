@@ -12,6 +12,7 @@ public class StackManager : MonoBehaviour, IEvents
 
     private SuperStack<StackableController> _stackableStack = new SuperStack<StackableController>();
     private Transform _node, _connectedNode;
+    private const float INSTANT_LERP = 1;
 
     #endregion // Variables
 
@@ -26,7 +27,7 @@ public class StackManager : MonoBehaviour, IEvents
 
     #region Updates
 
-    private void Update()
+    private void FixedUpdate()
     {
         StackStackables();  
     }
@@ -50,19 +51,27 @@ public class StackManager : MonoBehaviour, IEvents
             {
                 case 0:
 
-                    _node.position = Vector3.Lerp(_node.position, _carryPoint.position, _lerpSpeed);
+                    LerpToTargetPos(_carryPoint.position);
 
                     break;
 
                 default:
 
-                    _node.position = Vector3.Lerp(_node.position, _connectedNode.position + _vertDist * Vector3.up, _lerpSpeed);
+                    LerpToTargetPos(_connectedNode.position + _vertDist * Vector3.up);
 
                     break;
             }
 
             _connectedNode = _stackableStack.Pull(i).transform;
         }
+    }
+
+    private void LerpToTargetPos(Vector3 targetPos)
+    {
+        _node.position = new Vector3(
+            Mathf.Lerp(_node.position.x, targetPos.x, _lerpSpeed),
+            Mathf.Lerp(_node.position.y, targetPos.y, _lerpSpeed),
+            Mathf.Lerp(_node.position.z, targetPos.z, INSTANT_LERP));
     }
 
     #endregion // Methods
