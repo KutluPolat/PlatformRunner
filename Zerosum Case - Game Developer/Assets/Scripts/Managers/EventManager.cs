@@ -132,14 +132,12 @@ public class EventManager : MonoBehaviour
     {
         GameManager.Instance.IsSuccess = true;
         EventTrigger(StateLevelSuccess, "OnStateLevelSuccess");
-        OnStateLevelEnd();
     }
 
     public void OnStateLevelFailed()
     {
         GameManager.Instance.IsSuccess = false;
         EventTrigger(StateLevelFailed, "OnStateLevelFailed");
-        OnStateLevelEnd();
     }
 
     public void OnStateTapToPlay()
@@ -158,7 +156,7 @@ public class EventManager : MonoBehaviour
         EventTrigger(StateEndingSequence, "OnStateEndingSequence");
     }
 
-    private void OnStateLevelEnd()
+    public void OnStateLevelEnd()
     {
         EventTrigger(StateLevelEnd, "OnStateLevelEnd");
     }

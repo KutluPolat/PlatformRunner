@@ -91,46 +91,22 @@ public class Movement : MonoBehaviour, IEvents
 
     #region Rotation
 
-    protected virtual void HandleRotation(float horizontalDeltaPosition)
-    {
-        AddToQueue(horizontalDeltaPosition);
-
-        if (_isRotationBlocked == false)
-        {
-            _modelTransform.rotation = Quaternion.Lerp(_modelTransform.rotation, GetTargetRotation(), _rotationSpeed);
-        }
-    }
-
-    private float GetAverageOfLatestInputs()
+    public float GetAverageOfLatestInputs()
     {
         _totalDeltaPosition = 0;
 
         foreach (float deltaPosition in _lastHorizontalDeltaPositions)
             _totalDeltaPosition += deltaPosition;
 
-        return _totalDeltaPosition / _lastHorizontalDeltaPositions.Count;
+        return _lastHorizontalDeltaPositions.Count == 0 ? 0 : _totalDeltaPosition / _lastHorizontalDeltaPositions.Count;
     }
 
-    private void AddToQueue(float deltaPos)
+    protected void AddToQueue(float deltaPos)
     {
         _lastHorizontalDeltaPositions.Enqueue(deltaPos);
 
         if (_lastHorizontalDeltaPositions.Count > _numberOfDeltaPosInMemory)
             _lastHorizontalDeltaPositions.Dequeue();
-    }
-    private Quaternion GetTargetRotation()
-    {
-        float averageOfLatestInputs = GetAverageOfLatestInputs();
-        float targetRotationMultiplier = averageOfLatestInputs / _maxDeltaPosition;
-
-        if (averageOfLatestInputs == 0)
-        {
-            return new Quaternion(0, 0, 0, 1);
-        }
-        else
-        {
-            return new Quaternion(0, _minimumLocalRotationY * targetRotationMultiplier, 0, 1);
-        }
     }
 
     #endregion // Rotation

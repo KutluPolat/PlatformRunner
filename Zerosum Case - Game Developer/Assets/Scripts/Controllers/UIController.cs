@@ -74,6 +74,8 @@ public class UIController : MonoBehaviour, IEvents
         _endingPanel.SetActive(true);
         _failPanel.SetActive(true);
         _failBackground.gameObject.SetActive(true);
+
+        EventManager.Instance.OnStateLevelEnd();
     }
 
     private void OpenSuccessPanel()
@@ -83,6 +85,8 @@ public class UIController : MonoBehaviour, IEvents
         _endingPanel.SetActive(true);
         _successPanel.SetActive(true);
         _successBackground.gameObject.SetActive(true);
+
+        EventManager.Instance.OnStateLevelEnd();
     }
 
     private void CloseAllPanels()
