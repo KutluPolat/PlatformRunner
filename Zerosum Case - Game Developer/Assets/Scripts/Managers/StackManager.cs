@@ -10,7 +10,7 @@ public class StackManager : MonoBehaviour, IEvents
     [SerializeField, Range(0.01f, 1f)] private float _lerpSpeed;
     [SerializeField, Min(0.3f)] private float _vertDist = 1f;
 
-    private SuperStack<StackableController> _stackableStack = new SuperStack<StackableController>();
+    private SuperStack<StackableController> _stackables = new SuperStack<StackableController>();
     private Transform _node, _connectedNode;
     private const float INSTANT_LERP = 1;
 
@@ -29,7 +29,7 @@ public class StackManager : MonoBehaviour, IEvents
 
     private void FixedUpdate()
     {
-        StackStackables();  
+        StackUpwards();  
     }
 
     #endregion // Updates
@@ -38,14 +38,14 @@ public class StackManager : MonoBehaviour, IEvents
 
     private void AddToStack(StackableController newStackable)
     {
-        _stackableStack.Push(newStackable);
+        _stackables.Push(newStackable);
     }
 
-    private void StackStackables()
+    private void StackUpwards()
     {
-        for (int i = 0; i < _stackableStack.NumOfObjectsInCollection; i++)
+        for (int i = 0; i < _stackables.NumOfObjectsInCollection; i++)
         {
-            _node = _stackableStack.Pull(i).transform;
+            _node = _stackables.Pull(i).transform;
 
             switch (i)
             {
@@ -62,7 +62,7 @@ public class StackManager : MonoBehaviour, IEvents
                     break;
             }
 
-            _connectedNode = _stackableStack.Pull(i).transform;
+            _connectedNode = _stackables.Pull(i).transform;
         }
     }
 
@@ -72,6 +72,35 @@ public class StackManager : MonoBehaviour, IEvents
             Mathf.Lerp(_node.position.x, targetPos.x, _lerpSpeed),
             Mathf.Lerp(_node.position.y, targetPos.y, _lerpSpeed),
             Mathf.Lerp(_node.position.z, targetPos.z, INSTANT_LERP));
+    }
+
+    private void DropPart(StackableController trappedStackable)
+    {
+        int trappedIndex = _stackables.IndexOf(trappedStackable);
+        int countCollection = _stackables.NumOfObjectsInCollection;
+
+        for (int i = countCollection - 1; i >= 0; i--)
+        {
+            if(i > trappedIndex)
+            {
+                _stackables.Peek().IsCollected = false;
+                DotweenExtensions.ThrowObjectAway(_stackables.Pop().transform, new Vector2Int(0, 2), new Vector2(1.5f, 3f), new Vector2(-3f, 3f), new Vector2(12f, 16f));
+            }
+            else if(i == trappedIndex)
+            {
+                _stackables.Pop().DelayedDestroy();
+            }
+        }
+    }
+
+    private void DropEverything(StackableController @null)
+    {
+        DropPart(null);
+    }
+
+    private void RemoveExchangedStackable(StackableController stackableController)
+    {
+        _stackables.Remove(stackableController);
     }
 
     #endregion // Methods
@@ -86,11 +115,19 @@ public class StackManager : MonoBehaviour, IEvents
     public void SubscribeEvents()
     {
         EventManager.Instance.StackCollected += AddToStack;
+        EventManager.Instance.StackableExchanged += RemoveExchangedStackable;
+
+        EventManager.Instance.PlayerTrapped += DropEverything;
+        EventManager.Instance.StackableTrapped += DropPart;
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.StackCollected -= AddToStack;
+        EventManager.Instance.StackableExchanged -= RemoveExchangedStackable;
+
+        EventManager.Instance.PlayerTrapped -= DropEverything;
+        EventManager.Instance.StackableTrapped -= DropPart;
     }
 
     #endregion // Events

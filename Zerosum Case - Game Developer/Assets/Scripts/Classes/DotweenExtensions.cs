@@ -40,4 +40,16 @@ public class DotweenExtensions
     {
         DOTween.To(() => 0, x => x = 0, 0, duration).OnComplete(() => { delayedActivity(); }); 
     }
+
+    public static void ThrowObjectAway(Transform transform, Vector2Int minMaxNumJump, Vector2 minMaxJumpPower, Vector2 minMaxX, Vector2 minMaxZ)
+    {
+        Vector3 endPosition = transform.position + new Vector3(Random.Range(minMaxX.x, minMaxX.y), 0, Random.Range(minMaxZ.x, minMaxZ.y));
+        endPosition.y = 0.75f;
+
+        int numJump = Random.Range(minMaxNumJump.x, minMaxNumJump.y);
+        float jumpPower = Random.Range(minMaxJumpPower.x, minMaxJumpPower.y);
+        float duration = 0.5f * Mathf.Pow(1.2f, numJump);
+
+        transform.DOJump(endPosition, jumpPower, numJump, duration);
+    }
 }

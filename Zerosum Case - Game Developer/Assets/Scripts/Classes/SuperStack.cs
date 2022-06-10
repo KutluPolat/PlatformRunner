@@ -44,4 +44,22 @@ public class SuperStack<T>
         _collection.RemoveAt(_lastIndex);
         return _objectCache;
     }
+
+    public bool Remove(T @object)
+    {
+        if (_collection.Contains(@object))
+        {
+            _collection.Remove(@object);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public int IndexOf(T @object)
+    {
+        return _collection.IndexOf(@object);
+    }
 }

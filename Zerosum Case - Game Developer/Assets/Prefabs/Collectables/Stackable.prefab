@@ -236,6 +236,7 @@ MonoBehaviour:
     StackableType: 2
   _interactionCollider: {fileID: 2683338964443016176}
   _colliderBlockingDuration: 0.25
+  _destroyDuration: 2
   _currentStackableType: 0
   IsCollected: 0
 --- !u!65 &2683338964443016176
@@ -249,7 +250,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.1, z: 0.8}
+  m_Size: {x: 0.6, y: 0.5, z: 0.8}
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &2683338965086451004
 GameObject:

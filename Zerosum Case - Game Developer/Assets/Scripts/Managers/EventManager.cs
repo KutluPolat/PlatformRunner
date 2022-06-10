@@ -26,7 +26,7 @@ public class EventManager : MonoBehaviour
     #region Variables
 
     [BoxGroup("Is Event Debugs On"), SerializeField]
-    private bool _state, _button, _movement, _stack, _exchange, _gold;
+    private bool _state, _button, _movement, _stack, _exchange, _gold, _trap;
 
     #endregion // Variables
 
@@ -36,8 +36,9 @@ public class EventManager : MonoBehaviour
     public delegate void Button();
     public delegate void Movement();
     public delegate void StackableDelegate(StackableController stackable);
-    public delegate void ExchangeDelegate(Stackable exchangedStackable);
+    public delegate void ExchangeDelegate(StackableController exchangedStackable);
     public delegate void GoldDelegate();
+    public delegate void TrapDelegate(StackableController trappedStackable);
 
     #endregion // Delegates
 
@@ -49,10 +50,25 @@ public class EventManager : MonoBehaviour
     public event StackableDelegate StackCollected, StackTouchedToTheObstacle;
     public event ExchangeDelegate StackableExchanged;
     public event GoldDelegate GoldCollected, GoldUpdated, GoldLost;
+    public event TrapDelegate PlayerTrapped, StackableTrapped;
 
     #endregion // Events
 
     #region Methods
+
+    #region Trap
+
+    public void OnStackableTrapped(StackableController trappedStackable)
+    {
+        EventTrigger(trappedStackable, StackableTrapped, "OnStackableTrapped");
+    }
+
+    public void OnPlayerTrapped(StackableController trappedStackable)
+    {
+        EventTrigger(trappedStackable, PlayerTrapped, "OnPlayerTrapped");
+    }
+
+    #endregion // Trap
 
     #region Gold
 
@@ -77,7 +93,7 @@ public class EventManager : MonoBehaviour
 
     #region Exchange
 
-    public void OnStackableExchanged(Stackable exchangedStackable)
+    public void OnStackableExchanged(StackableController exchangedStackable)
     {
         EventTrigger(exchangedStackable, StackableExchanged, "OnStackableExchanged");
     }
@@ -165,6 +181,15 @@ public class EventManager : MonoBehaviour
 
     #region EventTriggers
 
+    private void EventTrigger(StackableController trappedStackable, TrapDelegate trapEvent, string methodName)
+    {
+        if (trapEvent != null)
+        {
+            LogIfActive(_trap, methodName);
+            trapEvent(trappedStackable);
+        }
+    }
+
     private void EventTrigger(GoldDelegate goldEvent, string methodName)
     {
         if(goldEvent != null)
@@ -174,7 +199,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    private void EventTrigger(Stackable exchangedStackable, ExchangeDelegate exchangeEvent, string methodName)
+    private void EventTrigger(StackableController exchangedStackable, ExchangeDelegate exchangeEvent, string methodName)
     {
         if(exchangeEvent != null)
         {

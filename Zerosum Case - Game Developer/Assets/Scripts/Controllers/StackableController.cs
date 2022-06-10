@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zerosum.PlatformRunner.Enums;
 using Sirenix.OdinInspector;
+using DG.Tweening;
 
 public class StackableController : MonoBehaviour
 {
     [SerializeField, BoxGroup("Stackables")] private Stackable _money, _gold, _gem;
     [SerializeField, Space] private Collider _interactionCollider;
-    [SerializeField] private float _colliderBlockingDuration = 0.25f;
+    [SerializeField] private float _colliderBlockingDuration = 0.25f, _destroyDuration = 2f;
     [SerializeField] private StackableType _currentStackableType;
     [HideInInspector] public bool IsCollected;
 
@@ -39,7 +40,6 @@ public class StackableController : MonoBehaviour
                 break;
         }
     }
-
 
     private Stackable GetCurrentStackable()
     {
@@ -93,7 +93,6 @@ public class StackableController : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (IsCollected)
@@ -118,11 +117,8 @@ public class StackableController : MonoBehaviour
             }
             else if (other.CompareTag("Exchanger")) 
             {
-                Stackable currentStackable = GetCurrentStackable();
-
-                currentStackable.PlayParticles();
-                EventManager.Instance.OnStackableExchanged(currentStackable);
-                Destroy(gameObject);
+                EventManager.Instance.OnStackableExchanged(this);
+                DelayedDestroy();
             }
         }
         else
@@ -139,5 +135,21 @@ public class StackableController : MonoBehaviour
         _interactionCollider.enabled = false;
         yield return new WaitForSeconds(seconds);
         _interactionCollider.enabled = true;
+    }
+
+    public void DelayedDestroy()
+    {
+        StartCoroutine(DelayedDestroyCoroutine());
+    }
+
+    private IEnumerator DelayedDestroyCoroutine()
+    {
+        IsCollected = false;
+        StartCoroutine(CloseColliderFor(_destroyDuration));
+        transform.DOScale(0, _destroyDuration / 2f).OnComplete(() => { GetCurrentStackable().PlayParticles(); });
+        
+        yield return new WaitForSeconds(_destroyDuration);
+
+        Destroy(gameObject);
     }
 }
