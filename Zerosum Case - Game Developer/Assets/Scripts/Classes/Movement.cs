@@ -44,19 +44,6 @@ public class Movement : MonoBehaviour, IEvents
 
     #region Movement
 
-    private void BlockHorizontalMovementFor(float seconds)
-    {
-        StopAllCoroutines();
-        StartCoroutine(BlockingCoroutine(seconds));
-    }
-
-    private IEnumerator BlockingCoroutine(float seconds)
-    {
-        _isHorizontalMovementBlocked = true;
-        yield return new WaitForSeconds(seconds);
-        _isHorizontalMovementBlocked = false;
-    }
-
     protected void MoveForward()
     {
         if (GameManager.Instance.IsGameStateEqualsTo(GameState.InGame) && _currentMovementState == MovementState.FreeToMove)
@@ -76,6 +63,17 @@ public class Movement : MonoBehaviour, IEvents
 
         modelPosition.x = Mathf.Clamp(modelPosition.x, -4.15f, +4.15f);
         _modelTransform.position = modelPosition;
+    }
+
+    private void PushPlayerBack()
+    {
+        _modelRigidbody.velocity = Vector3.zero;
+        _modelRigidbody.angularVelocity = Vector3.zero;
+
+        _modelTransform.DOMove(_modelTransform.position + Vector3.back * 10f, 0.5f).OnComplete(() =>
+        {
+            DotweenExtensions.PunchScale(_modelTransform);
+        });
     }
 
     private void BlockMovement()
@@ -124,6 +122,8 @@ public class Movement : MonoBehaviour, IEvents
         EventManager.Instance.MovementUnblocked += UnblockMovement;
         EventManager.Instance.StateInGame += UnblockMovement;
 
+        EventManager.Instance.PlayerTrapped += (value) => PushPlayerBack();
+
         EventManager.Instance.StateEndingSequence += () => { _modelRigidbody.velocity = Vector3.zero; Destroy(this); };
     }
 
@@ -132,6 +132,8 @@ public class Movement : MonoBehaviour, IEvents
         EventManager.Instance.MovementBlocked -= BlockMovement;
         EventManager.Instance.MovementUnblocked -= UnblockMovement;
         EventManager.Instance.StateInGame -= UnblockMovement;
+
+        EventManager.Instance.PlayerTrapped -= (value) => PushPlayerBack();
 
         EventManager.Instance.StateEndingSequence += () => { _modelRigidbody.velocity = Vector3.zero; Destroy(this); };
     }

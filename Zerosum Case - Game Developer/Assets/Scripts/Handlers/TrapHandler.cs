@@ -8,6 +8,7 @@ public class TrapHandler : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            EventManager.Instance.OnMovementBlocked();
             EventManager.Instance.OnPlayerTrapped(null);
         }
         else if (other.CompareTag("Stackable"))
