@@ -130,6 +130,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
         EventManager.Instance.StateInGame += () => { IsRunning = true; };
         EventManager.Instance.PlayerTrapped += (value) => HandleActionAnim(AnimState.Stumble);
         EventManager.Instance.MovementUnblocked += () => HandleActionAnim(AnimState.Run);
+        EventManager.Instance.StateLevelSuccess += () => HandleActionAnim(AnimState.Dance);
     }
 
     public void UnsubscribeEvents()
@@ -138,6 +139,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
         EventManager.Instance.StateInGame -= () => { IsRunning = true; };
         EventManager.Instance.PlayerTrapped -= (value) => HandleActionAnim(AnimState.Stumble);
         EventManager.Instance.MovementUnblocked -= () => HandleActionAnim(AnimState.Run);
+        EventManager.Instance.StateLevelSuccess -= () => HandleActionAnim(AnimState.Dance);
     }
 
     #endregion // Events

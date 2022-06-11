@@ -10,6 +10,8 @@ public class StackManager : MonoBehaviour, IEvents
     [SerializeField, Range(0.01f, 1f)] private float _lerpSpeed;
     [SerializeField, Min(0.3f)] private float _vertDist = 1f;
 
+    [HideInInspector] public bool IsStackFull;
+
     private SuperStack<StackableController> _stackables = new SuperStack<StackableController>();
     private Transform _node, _connectedNode;
     private const float INSTANT_LERP = 1;
@@ -40,8 +42,11 @@ public class StackManager : MonoBehaviour, IEvents
 
     private void AddToStack(StackableController newStackable)
     {
-        newStackable.IsCollected = true;
-        _stackables.Push(newStackable);
+        if(IsStackFull == false)
+        {
+            newStackable.IsCollected = true;
+            _stackables.Push(newStackable);
+        }
     }
 
     private void StackUpwards()
@@ -106,6 +111,12 @@ public class StackManager : MonoBehaviour, IEvents
         _stackables.Remove(stackableController);
     }
 
+    private void OnStackUpdated()
+    {
+        _currentNumOfStack = SaveSystem.Instance.CurrentNumOfStack;
+        IsStackFull = _currentNumOfStack >= SaveSystem.Instance.MaxNumOfStack;
+    }
+
     #endregion // Methods
 
     #region Events
@@ -123,7 +134,7 @@ public class StackManager : MonoBehaviour, IEvents
         EventManager.Instance.PlayerTrapped += DropEverything;
         EventManager.Instance.StackableTrapped += DropPart;
 
-        EventManager.Instance.StackUpdated += () => { _currentNumOfStack = SaveSystem.Instance.CurrentNumOfStack; };
+        EventManager.Instance.StackUpdated += OnStackUpdated;
     }
 
     public void UnsubscribeEvents()
@@ -134,7 +145,7 @@ public class StackManager : MonoBehaviour, IEvents
         EventManager.Instance.PlayerTrapped -= DropEverything;
         EventManager.Instance.StackableTrapped -= DropPart;
 
-        EventManager.Instance.StackUpdated -= () => { _currentNumOfStack = SaveSystem.Instance.CurrentNumOfStack; };
+        EventManager.Instance.StackUpdated -= OnStackUpdated;
     }
 
     #endregion // Events
