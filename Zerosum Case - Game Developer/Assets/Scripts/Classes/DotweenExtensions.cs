@@ -25,6 +25,17 @@ public class DotweenExtensions
         });
     }
 
+    public static void PunchScale(Transform transform, Ease ease, float targetScale = 1.2f, float originalScale = 1f, float duration = 0.5f)
+    {
+        transform.DOScale(originalScale, duration * 0.1f).SetEase(ease).OnComplete(() =>
+        {
+            transform.DOScale(targetScale, duration * 0.45f).SetEase(ease).OnComplete(() =>
+            {
+                transform.DOScale(originalScale, duration * 0.45f).SetEase(ease);
+            });
+        });
+    }
+
     public static void PunchRotation(Transform transform, Vector3 originalRotation,  Vector3 rotationPower, float duration = 0.4f)
     {
         transform.DORotate(originalRotation + rotationPower, duration * 0.1f).OnComplete(() =>

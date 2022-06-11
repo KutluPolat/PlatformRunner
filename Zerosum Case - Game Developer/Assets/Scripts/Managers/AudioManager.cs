@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
     #region Variables
 
     [SerializeField] private AudioSource _oneShotAudioSource, _continiousAudioSource;
-    [SerializeField] private AudioClip _audioOne, _audioTwo;
+    [SerializeField] private AudioClip _audioOne, _audioTwo, _upgradeSucessfull, _upgradeFailed;
 
     private float _timer;
 
@@ -46,16 +46,16 @@ public class AudioManager : MonoBehaviour
 
     #region Methods
 
+    #region Limited
+
     public void PlayOneShotLimitedAudio(AudioNames targetAudio)
     {
-        if(_timer <= 0)
+        if (_timer <= 0)
         {
             _timer = GameManager.Instance.FeedbackLimitDuration;
             PlayOneShotAudio(targetAudio);
         }
     }
-
-    #region Limited
 
     #endregion // Limited
 
@@ -72,6 +72,14 @@ public class AudioManager : MonoBehaviour
             case AudioNames.AudioTwo:
                 Play(_audioTwo);
                 break;
+
+            case AudioNames.UpgradeSucessfull:
+                Play(_upgradeSucessfull);
+                break;
+
+            case AudioNames.UpgradeFailed:
+                Play(_upgradeFailed);
+                break;
         }
     }
 
@@ -84,6 +92,10 @@ public class AudioManager : MonoBehaviour
     }
 
     #endregion // Instant
+
+    #region Instant (Pitch Tweaked)
+
+    #endregion // Instant (Pitch Tweaked)
 
     #endregion // Methods
 }

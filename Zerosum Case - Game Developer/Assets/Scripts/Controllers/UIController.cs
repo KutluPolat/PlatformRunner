@@ -10,10 +10,11 @@ public class UIController : MonoBehaviour, IEvents
 {
     #region Variables
 
-    [SerializeField, BoxGroup("Variables")] private float _panelDelay = 2f;
-    [SerializeField, BoxGroup("Panels")] private GameObject _tapToPlayPanel, _successPanel, _inGamePanel, _failPanel, _endingPanel;
-    [SerializeField, BoxGroup("Backgrounds")] Image _failBackground, _successBackground;
-    [SerializeField, BoxGroup("Texts")] private TextMeshProUGUI _levelText, _goldText;
+    [SerializeField, FoldoutGroup("Variables")] private float _panelDelay = 2f;
+    [SerializeField, FoldoutGroup("Panels")] private GameObject _tapToPlayPanel, _successPanel, _inGamePanel, _failPanel, _endingPanel;
+    [SerializeField, FoldoutGroup("Backgrounds")] Image _failBackground, _successBackground;
+    [SerializeField, FoldoutGroup("Texts")] private TextMeshProUGUI _levelText, _goldText;
+    [SerializeField, FoldoutGroup("Buttons")] private GameObject _maxStackUpgrade, _startingStackUpgrade, _incomeUpgrade;
 
     #endregion // Variables
 
@@ -31,8 +32,29 @@ public class UIController : MonoBehaviour, IEvents
     #region Button Controls
 
     public void OnPressedNextLevel() => EventManager.Instance.OnPressedNextLevel();
-
     public void OnPressedRestart() => EventManager.Instance.OnPressedRestart();
+
+    private void OnPressedUpgradeButton(ButtonType pressedButton)
+    {
+        GameObject button = null;
+
+        switch (pressedButton)
+        {
+            case ButtonType.StartingStack:
+                button = _startingStackUpgrade;
+                break;
+
+            case ButtonType.MaxStack:
+                button = _maxStackUpgrade;
+                break;
+
+            case ButtonType.Income:
+                button = _incomeUpgrade;
+                break;
+        }
+
+        DotweenExtensions.PunchScale(button.transform, DG.Tweening.Ease.OutBack, 1.3f, 1f, 0.25f);
+    }
 
     #endregion // Button Controls
 
@@ -126,6 +148,7 @@ public class UIController : MonoBehaviour, IEvents
         EventManager.Instance.StateLevelFailed += () => { StartCoroutine(DelayOpenLevelFail()); };
 
         EventManager.Instance.GoldUpdated += UpdateGoldText;
+        EventManager.Instance.PressedUpgradeButton += OnPressedUpgradeButton;
     }
 
     public void UnsubscribeEvents()
@@ -136,6 +159,7 @@ public class UIController : MonoBehaviour, IEvents
         EventManager.Instance.StateLevelFailed -= () => { StartCoroutine(DelayOpenLevelFail()); };
 
         EventManager.Instance.GoldUpdated -= UpdateGoldText;
+        EventManager.Instance.PressedUpgradeButton -= OnPressedUpgradeButton;
     }
 
     public void OnDestroy()

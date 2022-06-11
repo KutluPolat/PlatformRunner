@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Zerosum.PlatformRunner.Enums;
 
 public class EventManager : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class EventManager : MonoBehaviour
 
     public delegate void State();
     public delegate void Button();
+    public delegate void UpgradeButton(ButtonType buttonType);
     public delegate void Movement();
     public delegate void StackableDelegate(StackableController stackable);
     public delegate void ExchangeDelegate(StackableController exchangedStackable);
@@ -47,6 +49,7 @@ public class EventManager : MonoBehaviour
 
     public event State StateTapToPlay, StateInGame, StateEndingSequence, StateLevelSuccess, StateLevelFailed, StateLevelEnd;
     public event Button PressedNextLevel, PressedRestart;
+    public event UpgradeButton PressedUpgradeButton;
     public event Movement MovementBlocked, MovementUnblocked;
     public event StackableDelegate StackCollected;
     public event ExchangeDelegate StackableExchanged;
@@ -132,6 +135,11 @@ public class EventManager : MonoBehaviour
 
     #region Button
 
+    public void OnPressedUpgradeButton(ButtonType pressedButton)
+    {
+        EventTrigger(pressedButton, PressedUpgradeButton, "OnPressedMaxStackUpgrade");
+    }
+
     public void OnPressedNextLevel()
     {
         EventTrigger(PressedNextLevel, "OnPressedNextLevel");
@@ -182,6 +190,15 @@ public class EventManager : MonoBehaviour
     #endregion // State
 
     #region EventTriggers
+
+    private void EventTrigger(ButtonType pressedButton, UpgradeButton upgradeEvent, string methodName)
+    {
+        if(upgradeEvent != null)
+        {
+            LogIfActive(_button, methodName);
+            upgradeEvent(pressedButton);
+        }
+    }
 
     private void EventTrigger(StackableActionsDelegate stackableActionsEvent, string methodName)
     {

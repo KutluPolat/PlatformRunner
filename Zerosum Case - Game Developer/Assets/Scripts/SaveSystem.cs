@@ -45,6 +45,11 @@ public class SaveSystem : MonoBehaviour
         get { return MaxStackUpgrades.MaxNumOfStack; }
     }
 
+    public int StartingNumOfStack
+    {
+        get { return StartingStackUpgrades.StartingStack; }
+    }
+
     public IncomeUpgrade IncomeUpgrades
     {
         get { return SaveSystemBinary<IncomeUpgrade>.Load("IncomeUpgrades", new IncomeUpgrade()); }

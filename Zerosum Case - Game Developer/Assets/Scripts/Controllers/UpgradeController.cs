@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zerosum.PlatformRunner.Enums;
 
 public class UpgradeController : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class UpgradeController : MonoBehaviour
         {
             OnUpgradeFailed();
         }
+
+        EventManager.Instance.OnPressedUpgradeButton(ButtonType.StartingStack);
     }
 
     public void OnPressedMaxStackUpgradeButton()
@@ -37,6 +40,8 @@ public class UpgradeController : MonoBehaviour
         {
             OnUpgradeFailed();
         }
+
+        EventManager.Instance.OnPressedUpgradeButton(ButtonType.MaxStack);
     }
 
     public void OnPressedIncomeUpgradeButton()
@@ -49,15 +54,17 @@ public class UpgradeController : MonoBehaviour
         {
             OnUpgradeFailed();
         }
+
+        EventManager.Instance.OnPressedUpgradeButton(ButtonType.Income);
     }
 
     private void OnUpgradeSuccessfull()
     {
         UpdateSaves();
-        Debug.Log("Success");
     }
     private void UpdateSaves()
     {
+        AudioManager.Instance.PlayOneShotAudio(AudioNames.UpgradeSucessfull);
         SaveSystem.Instance.MaxStackUpgrades = _maxStackUpgrade;
         SaveSystem.Instance.StartingStackUpgrades = _startingStackUpgrade;
         SaveSystem.Instance.IncomeUpgrades = _incomeUpgrade;
@@ -65,8 +72,6 @@ public class UpgradeController : MonoBehaviour
 
     private void OnUpgradeFailed()
     {
-        Debug.Log("Failed");
+        AudioManager.Instance.PlayOneShotAudio(AudioNames.UpgradeFailed);
     }
-
-    
 }

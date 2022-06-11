@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zerosum.PlatformRunner.Enums;
 
 public class StackManager : MonoBehaviour, IEvents
 {
     #region Variables
 
+    [SerializeField] private GameObject _moneyPrefab;
     [SerializeField] private Transform _carryPoint;
     [SerializeField, Range(0.01f, 1f)] private float _lerpSpeed;
     [SerializeField, Min(0.3f)] private float _vertDist = 1f;
@@ -25,6 +27,24 @@ public class StackManager : MonoBehaviour, IEvents
     {
         SaveSystem.Instance.CurrentNumOfStack = 0;
         SubscribeEvents();
+        InitializeStack(ButtonType.StartingStack);
+    }
+
+    private void InitializeStack(ButtonType pressedButtonType)
+    {
+        if(pressedButtonType == ButtonType.StartingStack)
+        {
+            for (int i = _currentNumOfStack; i < SaveSystem.Instance.StartingNumOfStack; i++)
+            {
+                CreateNewStack();
+            }
+        }
+    }
+
+    private void CreateNewStack()
+    {
+        StackableController stackableController = Instantiate(_moneyPrefab).GetComponent<StackableController>();
+        EventManager.Instance.OnStackCollected(stackableController);
     }
 
     #endregion // Start
@@ -135,6 +155,7 @@ public class StackManager : MonoBehaviour, IEvents
         EventManager.Instance.StackableTrapped += DropPart;
 
         EventManager.Instance.StackUpdated += OnStackUpdated;
+        EventManager.Instance.PressedUpgradeButton += InitializeStack;
     }
 
     public void UnsubscribeEvents()
@@ -146,6 +167,7 @@ public class StackManager : MonoBehaviour, IEvents
         EventManager.Instance.StackableTrapped -= DropPart;
 
         EventManager.Instance.StackUpdated -= OnStackUpdated;
+        EventManager.Instance.PressedUpgradeButton -= InitializeStack;
     }
 
     #endregion // Events
