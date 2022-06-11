@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SuperStack<T>
 {
-    public int NumOfObjectsInCollection { get { return _collection.Count; } }
     private List<T> _collection = new List<T>();
     private int _lastIndex { get { return _collection.Count - 1; } }
     private T _objectCache;
@@ -12,6 +11,8 @@ public class SuperStack<T>
     public void Push(T @object)
     {
         _collection.Add(@object);
+        SaveSystem.Instance.CurrentNumOfStack = _collection.Count;
+        EventManager.Instance.OnStackUpdated();
     }
 
     public T Pull(int index)
@@ -42,6 +43,8 @@ public class SuperStack<T>
     {
         _objectCache = _collection[_lastIndex];
         _collection.RemoveAt(_lastIndex);
+        SaveSystem.Instance.CurrentNumOfStack = _collection.Count;
+        EventManager.Instance.OnStackUpdated(); 
         return _objectCache;
     }
 
@@ -50,6 +53,8 @@ public class SuperStack<T>
         if (_collection.Contains(@object))
         {
             _collection.Remove(@object);
+            SaveSystem.Instance.CurrentNumOfStack = _collection.Count;
+            EventManager.Instance.OnStackUpdated();
             return true;
         }
         else

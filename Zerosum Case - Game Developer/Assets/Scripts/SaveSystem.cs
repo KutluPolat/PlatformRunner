@@ -20,6 +20,8 @@ public class SaveSystem : MonoBehaviour
 
     #region Variables
 
+    [SerializeField, Min(5)] private int _defaultMaxNumOfStackables = 10;
+
     public int CurrentLevel
     {
         get { return SaveSystemBinary<int>.Load("Level", 1); }
@@ -30,6 +32,18 @@ public class SaveSystem : MonoBehaviour
     {
         get { return SaveSystemBinary<float>.Load("TotalGold", 0); }
         private set { SaveSystemBinary<float>.Save("TotalGold", value); }
+    }
+
+    public int CurrentNumOfStack
+    {
+        get { return SaveSystemBinary<int>.Load("CurrentNumOfStack", 0); }
+        set { SaveSystemBinary<int>.Save("CurrentNumOfStack", value); }
+    }
+
+    public int MaxNumOfStack
+    {
+        get { return SaveSystemBinary<int>.Load("MaxNumOfStack", _defaultMaxNumOfStackables); }
+        set { SaveSystemBinary<int>.Save("MaxNumOfStack", value); }
     }
 
     #endregion // Variables

@@ -15,7 +15,6 @@ public static class SaveSystemBinary<T>
         if (IS_SAVE_SYSTEM_ON == false)
             return;
 
-
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/" + name + "." + EXTENSION_NAME;
         FileStream stream = new FileStream(path, FileMode.Create);

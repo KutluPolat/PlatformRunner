@@ -13,6 +13,7 @@ public class StackManager : MonoBehaviour, IEvents
     private SuperStack<StackableController> _stackables = new SuperStack<StackableController>();
     private Transform _node, _connectedNode;
     private const float INSTANT_LERP = 1;
+    private int _currentNumOfStack;
 
     #endregion // Variables
 
@@ -20,6 +21,7 @@ public class StackManager : MonoBehaviour, IEvents
 
     private void Start()
     {
+        SaveSystem.Instance.CurrentNumOfStack = 0;
         SubscribeEvents();
     }
 
@@ -44,7 +46,7 @@ public class StackManager : MonoBehaviour, IEvents
 
     private void StackUpwards()
     {
-        for (int i = 0; i < _stackables.NumOfObjectsInCollection; i++)
+        for (int i = 0; i < _currentNumOfStack; i++)
         {
             _node = _stackables.Pull(i).transform;
 
@@ -78,7 +80,7 @@ public class StackManager : MonoBehaviour, IEvents
     private void DropPart(StackableController trappedStackable)
     {
         int trappedIndex = _stackables.IndexOf(trappedStackable);
-        int countCollection = _stackables.NumOfObjectsInCollection;
+        int countCollection = _currentNumOfStack;
 
         for (int i = countCollection - 1; i >= 0; i--)
         {
@@ -120,6 +122,8 @@ public class StackManager : MonoBehaviour, IEvents
 
         EventManager.Instance.PlayerTrapped += DropEverything;
         EventManager.Instance.StackableTrapped += DropPart;
+
+        EventManager.Instance.StackUpdated += () => { _currentNumOfStack = SaveSystem.Instance.CurrentNumOfStack; };
     }
 
     public void UnsubscribeEvents()
@@ -129,6 +133,8 @@ public class StackManager : MonoBehaviour, IEvents
 
         EventManager.Instance.PlayerTrapped -= DropEverything;
         EventManager.Instance.StackableTrapped -= DropPart;
+
+        EventManager.Instance.StackUpdated -= () => { _currentNumOfStack = SaveSystem.Instance.CurrentNumOfStack; };
     }
 
     #endregion // Events

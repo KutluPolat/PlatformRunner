@@ -44,7 +44,7 @@ public class DotweenExtensions
     public static void ThrowObjectAway(Transform transform, Vector2Int minMaxNumJump, Vector2 minMaxJumpPower, Vector2 minMaxX, Vector2 minMaxZ)
     {
         Vector3 endPosition = transform.position + new Vector3(Random.Range(minMaxX.x, minMaxX.y), 0, Random.Range(minMaxZ.x, minMaxZ.y));
-        endPosition.y = GameManager.CollectableDistToGround;
+        endPosition.y = GameManager.COLLECTABLE_DIST_TO_GROUND;
 
         int numJump = Random.Range(minMaxNumJump.x, minMaxNumJump.y);
         float jumpPower = Random.Range(minMaxJumpPower.x, minMaxJumpPower.y);

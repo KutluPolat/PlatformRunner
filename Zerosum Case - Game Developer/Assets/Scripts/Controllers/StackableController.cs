@@ -40,7 +40,7 @@ public class StackableController : MonoBehaviour
                 break;
         }
 
-        transform.position = new Vector3(transform.position.x, GameManager.CollectableDistToGround, transform.position.z);
+        transform.position = new Vector3(transform.position.x, GameManager.COLLECTABLE_DIST_TO_GROUND, transform.position.z);
     }
 
     private Stackable GetCurrentStackable()
@@ -65,7 +65,7 @@ public class StackableController : MonoBehaviour
 
     private void UpgradeStackable()
     {
-        if((int)_currentStackableType < GameManager.NumOfStackableType)
+        if((int)_currentStackableType < GameManager.NUM_OF_STACKABLE_TYPE)
         {
             switch (_currentStackableType)
             {

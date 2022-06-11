@@ -39,6 +39,7 @@ public class EventManager : MonoBehaviour
     public delegate void ExchangeDelegate(StackableController exchangedStackable);
     public delegate void GoldDelegate();
     public delegate void TrapDelegate(StackableController trappedStackable);
+    public delegate void StackableActionsDelegate();
 
     #endregion // Delegates
 
@@ -51,6 +52,7 @@ public class EventManager : MonoBehaviour
     public event ExchangeDelegate StackableExchanged;
     public event GoldDelegate GoldCollected, GoldUpdated, GoldLost;
     public event TrapDelegate PlayerTrapped, StackableTrapped;
+    public event StackableActionsDelegate StackUpdated;
 
     #endregion // Events
 
@@ -101,6 +103,11 @@ public class EventManager : MonoBehaviour
     #endregion // Exchange
 
     #region Stacks
+
+    public void OnStackUpdated()
+    {
+        EventTrigger(StackUpdated, "OnStackUpdated");
+    }
 
     public void OnStackCollected(StackableController stack)
     {
@@ -175,6 +182,15 @@ public class EventManager : MonoBehaviour
     #endregion // State
 
     #region EventTriggers
+
+    private void EventTrigger(StackableActionsDelegate stackableActionsEvent, string methodName)
+    {
+        if(stackableActionsEvent != null)
+        {
+            LogIfActive(_stack, methodName);
+            stackableActionsEvent();
+        }
+    }
 
     private void EventTrigger(StackableController trappedStackable, TrapDelegate trapEvent, string methodName)
     {
