@@ -43,13 +43,22 @@ public class DotweenExtensions
 
     public static void ThrowObjectAway(Transform transform, Vector2Int minMaxNumJump, Vector2 minMaxJumpPower, Vector2 minMaxX, Vector2 minMaxZ)
     {
-        Vector3 endPosition = transform.position + new Vector3(Random.Range(minMaxX.x, minMaxX.y), 0, Random.Range(minMaxZ.x, minMaxZ.y));
-        endPosition.y = GameManager.COLLECTABLE_DIST_TO_GROUND;
+        Vector3 localTargetPosition = new Vector3(Random.Range(minMaxX.x, minMaxX.y), 0, Random.Range(minMaxZ.x, minMaxZ.y));
 
-        int numJump = Random.Range(minMaxNumJump.x, minMaxNumJump.y);
+        int numJump = Random.Range(minMaxNumJump.x, minMaxNumJump.y + 1);
         float jumpPower = Random.Range(minMaxJumpPower.x, minMaxJumpPower.y);
         float duration = 0.5f * Mathf.Pow(1.2f, numJump);
 
-        transform.DOJump(endPosition, jumpPower, numJump, duration);
+        localTargetPosition.z *= Mathf.Pow(1.2f, numJump + 1);
+
+        Vector3 endPosition = transform.position + localTargetPosition;
+        endPosition.y = GameManager.COLLECTABLE_DIST_TO_GROUND;
+
+        endPosition.x = Mathf.Clamp(endPosition.x, GameManager.Instance.LeftEdgeOfPlatform, GameManager.Instance.RightEdgeOfPlatform);
+
+        transform.DOJump(endPosition, jumpPower, numJump, duration).OnStepComplete(() =>
+        {
+            PunchScale(transform, 1.2f, 1f, 0.25f);
+        });
     }
 }

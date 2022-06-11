@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour, IEvents
         if(Instance == null)
         {
             Instance = this;
+            InitializeEdges();
         }
         else
         {
@@ -26,10 +27,16 @@ public class GameManager : MonoBehaviour, IEvents
 
     #region Variables
 
+    [SerializeField, FoldoutGroup("Platform")] private MeshRenderer _platformMesh;
+    [SerializeField, Min(0), FoldoutGroup("Platform")] private float _safeEdgeDistance = 0.5f;
+
+    [FoldoutGroup("Platform"), HideInInspector] public float RightEdgeOfPlatform, LeftEdgeOfPlatform;
+    public float FeedbackLimitDuration = 0.05f;
+
+    public bool IsSuccess { get; set; }
     public const float COLLECTABLE_DIST_TO_GROUND = 0.35f;
     public const int NUM_OF_STACKABLE_TYPE = 3;
-    public float FeedbackLimitDuration = 0.05f;
-    public bool IsSuccess { get; set; }
+
     private GameState _currentGameState;
 
     #endregion // Variables
@@ -42,6 +49,17 @@ public class GameManager : MonoBehaviour, IEvents
     }
 
     #endregion // Start
+
+    #region Initializations
+
+    private void InitializeEdges()
+    {
+        Bounds platformBounds = _platformMesh.bounds;
+        RightEdgeOfPlatform = platformBounds.max.x - _safeEdgeDistance;
+        LeftEdgeOfPlatform = platformBounds.min.x + _safeEdgeDistance;
+    }
+
+    #endregion // Initializations
 
     #region StateControls
 

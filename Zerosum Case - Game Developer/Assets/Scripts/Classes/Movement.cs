@@ -27,6 +27,8 @@ public class Movement : MonoBehaviour, IEvents
 
     private Vector3 _newPosition;
 
+    private float _rightEdge, _leftEdge;
+
     #endregion // Variables
 
     #region Awake
@@ -42,6 +44,16 @@ public class Movement : MonoBehaviour, IEvents
 
     #endregion // Awake
 
+    #region Start
+
+    protected virtual void Start()
+    {
+        _rightEdge = GameManager.Instance.RightEdgeOfPlatform;
+        _leftEdge = GameManager.Instance.LeftEdgeOfPlatform;
+    }
+
+    #endregion // Start
+
     #region Movement
 
     protected void MoveForward()
@@ -56,12 +68,12 @@ public class Movement : MonoBehaviour, IEvents
     {
         Vector3 modelPosition = _modelTransform.position;
 
-        if (modelPosition.x > 4.15f || modelPosition.x < -4.15f)
+        if (modelPosition.x > _rightEdge || modelPosition.x < _leftEdge)
         {
             _modelRigidbody.velocity = new Vector3(0, 0, _modelRigidbody.velocity.z);
         }
 
-        modelPosition.x = Mathf.Clamp(modelPosition.x, -4.15f, +4.15f);
+        modelPosition.x = Mathf.Clamp(modelPosition.x, _leftEdge, _rightEdge);
         _modelTransform.position = modelPosition;
     }
 

@@ -15,17 +15,22 @@ public class MovementController : Movement
 
     #region Start
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         SubscribeEvents();
     }
 
     #endregion // Start
 
+    #region Updates
+
     private void LateUpdate()
     {
         ClampMovement();
     }
+
+    #endregion // Updates
 
     #region Methods
 
