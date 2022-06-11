@@ -14,8 +14,12 @@ public class CollectableHandler : MonoBehaviour
 
     private void OnCollected()
     {
+        GetComponent<Collider>().enabled = false;
+
         float randDuration = Random.Range(_duration.x, _duration.y);
         float randYDist = Random.Range(_yDist.x, _yDist.y);
+
+        SaveSystem.Instance.AddGold(_collectable.Value);
 
         _modelParent.DOScale(0, randDuration).SetEase(Ease.OutBack);
         _modelParent.DOLocalMoveY(randYDist, randDuration).OnComplete(() => 
@@ -32,11 +36,16 @@ public class CollectableHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") || other.CompareTag("Stackable"))
+        if(other.CompareTag("Player"))
         {
-            GetComponent<Collider>().enabled = false;
             OnCollected();
-            SaveSystem.Instance.AddGold(_collectable.Value);
+        }
+        else if (other.CompareTag("Stackable"))
+        {
+            if (other.GetComponent<StackableController>().IsCollected)
+            {
+                OnCollected();
+            }
         }
     }
 }

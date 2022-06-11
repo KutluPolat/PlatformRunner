@@ -34,16 +34,17 @@ public class InputController : MonoBehaviour
 
     #region Methods
 
+    public void OnPressedTapToPlayButton()
+    {
+        EventManager.Instance.OnStateInGame();
+    }
+
     private void HandleInput()
     {
         if (Input.GetMouseButtonDown(0) && _isPressed == false)
         {
             switch (GameManager.Instance.GetCurrentGameState())
             {
-                case GameState.TapToPlay:
-                    EventManager.Instance.OnStateInGame();
-                    break;
-
                 case GameState.LevelEnd:
 
                     if (GameManager.Instance.IsSuccess)
