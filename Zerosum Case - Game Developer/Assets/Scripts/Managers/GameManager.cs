@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour, IEvents
 
     #region Variables
 
+    public const float CollectableDistToGround = 0.35f;
     public const int NumOfStackableType = 3;
     public float FeedbackLimitDuration = 0.05f;
     public bool IsSuccess { get; set; }

@@ -12,7 +12,7 @@ public class StackableController : MonoBehaviour
     [SerializeField, Space] private Collider _interactionCollider;
     [SerializeField] private float _colliderBlockingDuration = 0.25f, _destroyDuration = 2f;
     [SerializeField] private StackableType _currentStackableType;
-    [HideInInspector] public bool IsCollected;
+    public bool IsCollected { get; set; }
 
     private void Start()
     {
@@ -39,6 +39,8 @@ public class StackableController : MonoBehaviour
                 _gem.Model.SetActive(true);
                 break;
         }
+
+        transform.position = new Vector3(transform.position.x, GameManager.CollectableDistToGround, transform.position.z);
     }
 
     private Stackable GetCurrentStackable()
@@ -101,10 +103,6 @@ public class StackableController : MonoBehaviour
             {
                 StartCoroutine(CloseColliderFor(_colliderBlockingDuration));
                 UpgradeStackable();
-            }
-            else if (other.CompareTag("Obstacle"))
-            {
-                EventManager.Instance.OnStackTouchedToTheObstacle(this);
             }
             else if (other.CompareTag("Stackable"))
             {

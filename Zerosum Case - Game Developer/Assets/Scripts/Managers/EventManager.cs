@@ -47,7 +47,7 @@ public class EventManager : MonoBehaviour
     public event State StateTapToPlay, StateInGame, StateEndingSequence, StateLevelSuccess, StateLevelFailed, StateLevelEnd;
     public event Button PressedNextLevel, PressedRestart;
     public event Movement MovementBlocked, MovementUnblocked;
-    public event StackableDelegate StackCollected, StackTouchedToTheObstacle;
+    public event StackableDelegate StackCollected;
     public event ExchangeDelegate StackableExchanged;
     public event GoldDelegate GoldCollected, GoldUpdated, GoldLost;
     public event TrapDelegate PlayerTrapped, StackableTrapped;
@@ -101,11 +101,6 @@ public class EventManager : MonoBehaviour
     #endregion // Exchange
 
     #region Stacks
-
-    public void OnStackTouchedToTheObstacle(StackableController stack)
-    {
-        EventTrigger(stack, StackTouchedToTheObstacle, "OnStackTouchedToTheObstacle");
-    }
 
     public void OnStackCollected(StackableController stack)
     {

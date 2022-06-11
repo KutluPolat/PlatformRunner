@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Stackable
   - Trap
+  - Exchanger
+  - Obstacle
+  - Upgrader
   layers:
   - Default
   - TransparentFX

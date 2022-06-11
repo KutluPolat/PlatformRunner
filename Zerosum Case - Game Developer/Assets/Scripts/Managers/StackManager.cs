@@ -38,6 +38,7 @@ public class StackManager : MonoBehaviour, IEvents
 
     private void AddToStack(StackableController newStackable)
     {
+        newStackable.IsCollected = true;
         _stackables.Push(newStackable);
     }
 

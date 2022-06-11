@@ -900,9 +900,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6bff2785a217b418743c82625a642b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _highestVerticalSpeedLimit: 14
-  _lowestVerticalSpeedLimit: 7
-  _verticalMovementSpeed: 2
+  _highestVerticalSpeedLimit: 10
+  _lowestVerticalSpeedLimit: 4
+  _verticalMovementSpeed: 1
   _rotationUpAngle: 50
   _rotationSpeed: 0.1
   _horizontalMovementSpeed: 2000
@@ -1176,11 +1176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876154, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -3e-45
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876154, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1e-45
+      value: -1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876157, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_Follow
@@ -1196,11 +1196,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405730531186, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -3e-45
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405730531186, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1e-45
+      value: -1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405730531187, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_UpdateMethod
