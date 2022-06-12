@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour, IEvents
 
     #region Variables
 
+    public StackManager StackManager;
     public FloatingMoneyController FloatingMoneyController;
     public HapticHandler HapticHandler;
     public Transform PlayerTransform;

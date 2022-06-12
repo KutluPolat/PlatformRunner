@@ -27,8 +27,10 @@ public class FloatingMoneyController : ObjectPool
     {
         if(num > 0)
         {
+            float durationPerPhase = _floatDuration / 2f;
             List<GameObject> generatedFloatingMoneys = new List<GameObject>();
-            float targetDurationToGenerate = (_floatDuration / 2) / num;
+            float targetDurationToGenerate = (durationPerPhase) / num;
+            GameManager.Instance.StackManager.DestroyStackablesInSeconds(durationPerPhase);
 
             for (int i = 0; i < num; i++)
             {
@@ -42,12 +44,12 @@ public class FloatingMoneyController : ObjectPool
                 yield return new WaitForSeconds(targetDurationToGenerate);
             }
 
-            yield return new WaitForSeconds(_floatDuration / 2);
+            yield return new WaitForSeconds(durationPerPhase);
 
             foreach(GameObject floatingMoney in generatedFloatingMoneys)
             {
-                floatingMoney.transform.DOScale(0, _floatDuration / 2).SetEase(Ease.OutBack);
-                floatingMoney.transform.DOMove(_piggyBank.position, _floatDuration / 2).SetEase(Ease.OutBack).OnComplete(() =>
+                floatingMoney.transform.DOScale(0, durationPerPhase).SetEase(Ease.OutBack);
+                floatingMoney.transform.DOMove(_piggyBank.position, durationPerPhase).SetEase(Ease.OutBack).OnComplete(() =>
                 {
                     DotweenExtensions.PunchScale(_piggyBank, Ease.OutBack, 1.3f, 1f, 0.2f);
                 });

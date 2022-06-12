@@ -108,6 +108,21 @@ public class StackManager : MonoBehaviour, IEvents
 
     #region Collection Controls
 
+    public void DestroyStackablesInSeconds(float duration)
+    {
+        StartCoroutine(DestroyStackables(duration / _currentNumOfStack));
+    }
+
+    private IEnumerator DestroyStackables(float durationPerStackable)
+    {
+        int numStackables = _currentNumOfStack;
+        for (int i = 0; i < numStackables; i++)
+        {
+            _stackables.Pop().DelayedDestroy();
+            yield return new WaitForSeconds(durationPerStackable);
+        }
+    }
+
     private void AddToStack(StackableController newStackable)
     {
         if (IsStackFull == false)
