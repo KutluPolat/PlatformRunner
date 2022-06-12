@@ -61,15 +61,7 @@ public class StackManager : MonoBehaviour, IEvents
 
     #region Methods
 
-    private void AddToStack(StackableController newStackable)
-    {
-        if(IsStackFull == false)
-        {
-            SaveSystem.Instance.AddToStackedGold(newStackable.GetCurrentStackable().Value);
-            newStackable.IsCollected = true;
-            _stackables.Push(newStackable);
-        }
-    }
+    #region Stacking Controls
 
     private void StackUpwards()
     {
@@ -81,13 +73,16 @@ public class StackManager : MonoBehaviour, IEvents
             {
                 case 0:
 
-                    LerpToTargetPos(_carryPoint.position);
+                    _node.transform.parent = _carryPoint;
+                    _node.transform.localPosition = Vector3.zero;
+                    _node.transform.localRotation = Quaternion.identity;
 
                     break;
 
                 default:
 
                     LerpToTargetPos(_connectedNode.position + _vertDist * Vector3.up);
+                    LerpToTargetRot(_carryPoint.rotation);
 
                     break;
             }
@@ -104,6 +99,25 @@ public class StackManager : MonoBehaviour, IEvents
             Mathf.Lerp(_node.position.z, targetPos.z, INSTANT_LERP));
     }
 
+    private void LerpToTargetRot(Quaternion targetRot)
+    {
+        _node.rotation = Quaternion.Lerp(_node.rotation, targetRot, _lerpSpeed);
+    }
+
+    #endregion // Stacking Controls
+
+    #region Collection Controls
+
+    private void AddToStack(StackableController newStackable)
+    {
+        if (IsStackFull == false)
+        {
+            SaveSystem.Instance.AddToStackedGold(newStackable.GetCurrentStackable().Value);
+            newStackable.IsCollected = true;
+            _stackables.Push(newStackable);
+        }
+    }
+
     private void DropPart(StackableController trappedStackable)
     {
         int trappedIndex = _stackables.IndexOf(trappedStackable);
@@ -111,6 +125,7 @@ public class StackManager : MonoBehaviour, IEvents
 
         for (int i = countCollection - 1; i >= 0; i--)
         {
+            _stackables.Peek().transform.parent = null;
             SaveSystem.Instance.AddToStackedGold(_stackables.Peek().GetCurrentStackable().Value * -1);
 
             if(i > trappedIndex)
@@ -149,6 +164,8 @@ public class StackManager : MonoBehaviour, IEvents
             EventManager.Instance.OnFeverModeOff();
         }
     }
+
+    #endregion // Collection Controls
 
     #endregion // Methods
 

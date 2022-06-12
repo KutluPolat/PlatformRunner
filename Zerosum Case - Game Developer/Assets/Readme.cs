@@ -22,35 +22,35 @@
  *      This screen will appear before starting a new level.
  * 
  *      It includes ;
- *      -Game Title (You can choose your own)
+ *      +-Game Title (You can choose your own)
  *      +-Tap To Play Button and Text
- *      -Current Level Number
- *      -Currency Amount
- *      -Start Stack Upgrade Button & Price
+ *      +-Current Level Number
+ *      +-Currency Amount
+ *      +-Start Stack Upgrade Button & Price
  *
- *      Start Stack Upgrade Button :
- *      This button will consume our currency and increase our starting stack.
+ *      +Start Stack Upgrade Button :
+ *      +This button will consume our currency and increase our starting stack.
  *
  *  In Game :
- *      This screen will appear while we are controlling the character.
+ *      +This screen will appear while we are controlling the character.
  *
  *      It includes ;
- *      -Current Level Number
- *      -Currency Amount
- *      -Stack Amount
+ *      +-Current Level Number
+ *      +-Currency Amount
+ *      +-Stack Amount
  *
  *      Stack Amount :
- *      This must be attached to and move with the character as smooth as possible.
+ *      +This must be attached to and move with the character as smooth as possible.
  *
  *  Level End :
  *      This screen will appear after we reached our finish line.
  *
  *      It includes ;
- *      -Level Completed Text
- *      -Collected Currency Amount
- *      -Next Level Button
+ *      +-Level Completed Text
+ *      +-Collected Currency Amount
+ *      +-Next Level Button
  *
- * !!UI elements must be responsive and works well with different resolutions.
+ * +!!UI elements must be responsive and works well with different resolutions.
  */
      
  /* GAMEPLAY

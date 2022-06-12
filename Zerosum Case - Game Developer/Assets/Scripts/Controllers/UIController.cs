@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour, IEvents
     [SerializeField, FoldoutGroup("Variables")] private float _panelDelay = 2f;
     [SerializeField, FoldoutGroup("Panels")] private GameObject _tapToPlayPanel, _successPanel, _inGamePanel, _failPanel, _endingPanel;
     [SerializeField, FoldoutGroup("Backgrounds")] Image _failBackground, _successBackground;
-    [SerializeField, FoldoutGroup("Texts")] private TextMeshProUGUI _levelText, _goldText, _stackText;
+    [SerializeField, FoldoutGroup("Texts")] private TextMeshProUGUI _levelText, _goldText, _stackText, _endStackText;
     [SerializeField, FoldoutGroup("Buttons")] private GameObject _maxStackUpgrade, _startingStackUpgrade, _incomeUpgrade;
 
     #endregion // Variables
@@ -69,6 +69,7 @@ public class UIController : MonoBehaviour, IEvents
     {
         _goldText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.TotalGold)}$";
         _stackText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.StackedGold)}";
+        _endStackText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.StackedGold)}";
     }
 
     #endregion // Texts
@@ -107,6 +108,7 @@ public class UIController : MonoBehaviour, IEvents
         _endingPanel.SetActive(true);
         _successPanel.SetActive(true);
         _successBackground.gameObject.SetActive(true);
+        UpdateGoldTexts();
 
         EventManager.Instance.OnStateLevelEnd();
     }

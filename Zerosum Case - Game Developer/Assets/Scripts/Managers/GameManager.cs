@@ -66,10 +66,33 @@ public class GameManager : MonoBehaviour, IEvents
     #region StateControls
 
     public void SetMovStateTo(MovementState newState) => _currentMovementState = newState;
+
     public bool IsMovStateEqualsTo(MovementState thisState)
     {
         return thisState == _currentMovementState;
     }
+
+    public bool IsMovStateEqualsTo(ComparerType comparer, params MovementState[] thisState)
+    {
+        bool isMovementStateEqualsOneOfThem = false;
+
+        foreach (MovementState movState in thisState)
+        {
+            switch (comparer)
+            {
+                case ComparerType.Or:
+                    isMovementStateEqualsOneOfThem |= movState == _currentMovementState;
+                    break;
+
+                case ComparerType.And:
+                    isMovementStateEqualsOneOfThem &= movState == _currentMovementState;
+                    break;
+            }
+        }
+
+        return isMovementStateEqualsOneOfThem;
+    }
+
     public MovementState GetMovState()
     {
         return _currentMovementState;
