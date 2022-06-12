@@ -14,7 +14,7 @@ public class StackableController : MonoBehaviour
     [SerializeField] private StackableType _currentStackableType;
     public bool IsCollected { get; set; }
 
-    private void Start()
+    private void Awake()
     {
         InitializeStackable();
     }
@@ -43,7 +43,7 @@ public class StackableController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, GameManager.COLLECTABLE_DIST_TO_GROUND, transform.position.z);
     }
 
-    private Stackable GetCurrentStackable()
+    public Stackable GetCurrentStackable()
     {
         switch (_currentStackableType)
         {

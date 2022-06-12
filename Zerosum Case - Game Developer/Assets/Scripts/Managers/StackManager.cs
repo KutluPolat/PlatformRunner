@@ -65,6 +65,7 @@ public class StackManager : MonoBehaviour, IEvents
     {
         if(IsStackFull == false)
         {
+            SaveSystem.Instance.AddToStackedGold(newStackable.GetCurrentStackable().Value);
             newStackable.IsCollected = true;
             _stackables.Push(newStackable);
         }
@@ -110,6 +111,8 @@ public class StackManager : MonoBehaviour, IEvents
 
         for (int i = countCollection - 1; i >= 0; i--)
         {
+            SaveSystem.Instance.AddToStackedGold(_stackables.Peek().GetCurrentStackable().Value * -1);
+
             if(i > trappedIndex)
             {
                 _stackables.Peek().IsCollected = false;

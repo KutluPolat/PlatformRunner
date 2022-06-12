@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour, IEvents
     [SerializeField, FoldoutGroup("Variables")] private float _panelDelay = 2f;
     [SerializeField, FoldoutGroup("Panels")] private GameObject _tapToPlayPanel, _successPanel, _inGamePanel, _failPanel, _endingPanel;
     [SerializeField, FoldoutGroup("Backgrounds")] Image _failBackground, _successBackground;
-    [SerializeField, FoldoutGroup("Texts")] private TextMeshProUGUI _levelText, _goldText;
+    [SerializeField, FoldoutGroup("Texts")] private TextMeshProUGUI _levelText, _goldText, _stackText;
     [SerializeField, FoldoutGroup("Buttons")] private GameObject _maxStackUpgrade, _startingStackUpgrade, _incomeUpgrade;
 
     #endregion // Variables
@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour, IEvents
     {
         SubscribeEvents();
         OpenTapToPlayPanel();
-        UpdateGoldText();
+        UpdateGoldTexts();
     }
 
     #endregion // Start
@@ -65,9 +65,10 @@ public class UIController : MonoBehaviour, IEvents
         _levelText.text = "Level " + SaveSystem.Instance.CurrentLevel;
     }
 
-    private void UpdateGoldText()
+    private void UpdateGoldTexts()
     {
         _goldText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.TotalGold)}$";
+        _stackText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.StackedGold)}";
     }
 
     #endregion // Texts
@@ -147,7 +148,7 @@ public class UIController : MonoBehaviour, IEvents
         EventManager.Instance.StateLevelSuccess += () => { StartCoroutine(DelayOpenLevelSuccess()); };
         EventManager.Instance.StateLevelFailed += () => { StartCoroutine(DelayOpenLevelFail()); };
 
-        EventManager.Instance.GoldUpdated += UpdateGoldText;
+        EventManager.Instance.GoldUpdated += UpdateGoldTexts;
         EventManager.Instance.PressedUpgradeButton += OnPressedUpgradeButton;
     }
 
@@ -158,7 +159,7 @@ public class UIController : MonoBehaviour, IEvents
         EventManager.Instance.StateLevelSuccess -= () => { StartCoroutine(DelayOpenLevelSuccess()); };
         EventManager.Instance.StateLevelFailed -= () => { StartCoroutine(DelayOpenLevelFail()); };
 
-        EventManager.Instance.GoldUpdated -= UpdateGoldText;
+        EventManager.Instance.GoldUpdated -= UpdateGoldTexts;
         EventManager.Instance.PressedUpgradeButton -= OnPressedUpgradeButton;
     }
 

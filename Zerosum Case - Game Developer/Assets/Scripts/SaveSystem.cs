@@ -11,9 +11,14 @@ public class SaveSystem : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            StackedGold = 0;
+        }
         else
+        {
             Destroy(gameObject);
+        } 
     }
 
     #endregion // Singleton
@@ -32,6 +37,12 @@ public class SaveSystem : MonoBehaviour
     {
         get { return SaveSystemBinary<float>.Load("TotalGold", 0); }
         private set { SaveSystemBinary<float>.Save("TotalGold", value); }
+    }
+
+    public float StackedGold
+    {
+        get { return SaveSystemBinary<float>.Load("StackedGoldInThisLevel", 0); }
+        private set { SaveSystemBinary<float>.Save("StackedGoldInThisLevel", value); }
     }
 
     public int CurrentNumOfStack
@@ -72,9 +83,19 @@ public class SaveSystem : MonoBehaviour
 
     #region Methods
 
-    public void AddGold(float value)
+    public void AddToTotalGold(float value)
     {
         TotalGold += value;
+
+        if (value > 0)
+            EventManager.Instance.OnGoldCollected();
+        else
+            EventManager.Instance.OnGoldLost();
+    }
+
+    public void AddToStackedGold(float value)
+    {
+        StackedGold += value;
 
         if (value > 0)
             EventManager.Instance.OnGoldCollected();

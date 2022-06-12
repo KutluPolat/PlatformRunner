@@ -20,7 +20,7 @@ public abstract class Upgrade
     {
         if(SaveSystem.Instance.TotalGold >= price)
         {
-            SaveSystem.Instance.AddGold(-price);
+            SaveSystem.Instance.AddToTotalGold(-price);
             return true;
         }
         else
