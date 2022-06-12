@@ -115,6 +115,7 @@ public class StackManager : MonoBehaviour, IEvents
             if (GameManager.Instance.IsGameStateEqualsTo(GameState.InGame))
                 AudioManager.Instance.PlayOneShotAudio(AudioNames.Collect, true, true);
 
+            newStackable.GetComponent<StackableAnimationHandler>().OnCollected();
             SaveSystem.Instance.AddToStackedGold(newStackable.GetCurrentStackable().Value);
             newStackable.IsCollected = true;
             _stackables.Push(newStackable);
@@ -135,6 +136,7 @@ public class StackManager : MonoBehaviour, IEvents
 
                 if (i > trappedIndex)
                 {
+                    _stackables.Peek().GetComponent<StackableAnimationHandler>().OnIdle();
                     _stackables.Peek().IsCollected = false;
                     DotweenExtensions.ThrowObjectAway(_stackables.Pop().transform, new Vector2Int(0, 2), new Vector2(1.5f, 3f), new Vector2(-3f, 3f), new Vector2(12f, 16f));
                 }
