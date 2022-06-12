@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour, IEvents
 
     #region Variables
 
+    public FloatingMoneyController FloatingMoneyController;
     public HapticHandler HapticHandler;
     public Transform PlayerTransform;
     [SerializeField, FoldoutGroup("Platform")] private MeshRenderer _platformMesh;

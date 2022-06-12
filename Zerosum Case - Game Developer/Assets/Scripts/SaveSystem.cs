@@ -90,6 +90,7 @@ public class SaveSystem : MonoBehaviour
         if (value > 0)
         {
             EventManager.Instance.OnGoldCollected();
+            GameManager.Instance.FloatingMoneyController.FloatMoney(value);
         }
         else
         {
