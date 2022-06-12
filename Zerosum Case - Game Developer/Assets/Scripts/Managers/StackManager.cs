@@ -113,7 +113,10 @@ public class StackManager : MonoBehaviour, IEvents
         if (IsStackFull == false)
         {
             if (GameManager.Instance.IsGameStateEqualsTo(GameState.InGame))
+            {
+                GameManager.Instance.HapticHandler.MediumHaptic();
                 AudioManager.Instance.PlayOneShotAudio(AudioNames.Collect, true, true);
+            }
 
             newStackable.GetComponent<StackableAnimationHandler>().OnCollected();
             SaveSystem.Instance.AddToStackedGold(newStackable.GetCurrentStackable().Value);

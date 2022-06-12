@@ -38,19 +38,19 @@ public class HapticHandler : MonoBehaviour, IEvents
 
     #region HapticMethods
 
-    private void MediumHaptic()
+    public void MediumHaptic()
     {
         _tapticMethod = Taptic.Medium;
         ApplyTaptic();
     }
 
-    private void SuccessHaptic()
+    public void SucessHaptic()
     {
         _tapticMethod = Taptic.Success;
         ApplyTaptic();
     }
 
-    private void FailureHaptic()
+    public void FailureHaptic()
     {
         _tapticMethod = Taptic.Failure;
         ApplyTaptic();
@@ -76,14 +76,20 @@ public class HapticHandler : MonoBehaviour, IEvents
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.StateLevelSuccess += SuccessHaptic;
+        EventManager.Instance.StateLevelSuccess += SucessHaptic;
         EventManager.Instance.StateLevelFailed += FailureHaptic;
+
+        EventManager.Instance.PlayerTrapped += (value) => FailureHaptic();
+        EventManager.Instance.FeverModeOn += () => SucessHaptic();
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.StateLevelSuccess -= SuccessHaptic;
+        EventManager.Instance.StateLevelSuccess -= SucessHaptic;
         EventManager.Instance.StateLevelFailed -= FailureHaptic;
+
+        EventManager.Instance.PlayerTrapped -= (value) => FailureHaptic();
+        EventManager.Instance.FeverModeOn -= () => SucessHaptic();
     }
 
     #endregion // Events

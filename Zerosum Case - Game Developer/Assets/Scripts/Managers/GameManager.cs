@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour, IEvents
 
     #region Variables
 
+    public HapticHandler HapticHandler;
     public Transform PlayerTransform;
     [SerializeField, FoldoutGroup("Platform")] private MeshRenderer _platformMesh;
     [SerializeField, Min(0), FoldoutGroup("Platform")] private float _safeEdgeDistance = 0.5f;

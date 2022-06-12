@@ -13,6 +13,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
     [SerializeField, Min(0)] private float _animationBlendDuration = 0.5f;
     [SerializeField] private Movement _movement;
     [SerializeField, SceneObjectsOnly] private Animator _rotAnim, _movAnim;
+    [SerializeField] private ParticleSystem[] _flameTrails;
 
     private float _currentIdleAction, _currentAction, _currentRun;
 
@@ -34,6 +35,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
     private void Start()
     {
+        SetFlameTrailsState(false);
         SubscribeEvents();
     }
 
@@ -55,6 +57,8 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
     private void HandleActionAnim(AnimState newAnimState)
     {
+        SetFlameTrailsState(false);
+
         switch (newAnimState)
         {
             case AnimState.Idle:
@@ -83,6 +87,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
             case AnimState.Dash:
 
+                SetFlameTrailsState(true);
                 CurrentAnimState = AnimState.Dash;
                 IsRunning = true;
                 DOValues(0, 0, 2);
@@ -114,6 +119,24 @@ public class AnimationHandler : MonoBehaviour, IEvents
         _movAnim.SetFloat("IdleAction", _currentIdleAction);
         _movAnim.SetFloat("Action", _currentAction);
         _movAnim.SetFloat("Run", _currentRun);
+    }
+
+    private void SetFlameTrailsState(bool state)
+    {
+        foreach(ParticleSystem particleSystem in _flameTrails)
+        {
+            switch (state)
+            {
+                case true:
+                    particleSystem.Play();
+                    break;
+
+                case false:
+                    particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                    break;
+            }
+            
+        }
     }
 
     #endregion // Methods
