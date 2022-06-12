@@ -64,7 +64,7 @@ public class UpgradeController : MonoBehaviour
     }
     private void UpdateSaves()
     {
-        AudioManager.Instance.PlayOneShotAudio(AudioNames.UpgradeSucessfull);
+        AudioManager.Instance.PlayOneShotAudio(AudioNames.UpgradeSucessfull, false, false);
         SaveSystem.Instance.MaxStackUpgrades = _maxStackUpgrade;
         SaveSystem.Instance.StartingStackUpgrades = _startingStackUpgrade;
         SaveSystem.Instance.IncomeUpgrades = _incomeUpgrade;
@@ -72,6 +72,6 @@ public class UpgradeController : MonoBehaviour
 
     private void OnUpgradeFailed()
     {
-        AudioManager.Instance.PlayOneShotAudio(AudioNames.UpgradeFailed);
+        AudioManager.Instance.PlayOneShotAudio(AudioNames.UpgradeFailed, false, false);
     }
 }

@@ -112,6 +112,9 @@ public class StackManager : MonoBehaviour, IEvents
     {
         if (IsStackFull == false)
         {
+            if (GameManager.Instance.IsGameStateEqualsTo(GameState.InGame))
+                AudioManager.Instance.PlayOneShotAudio(AudioNames.Collect, true, true);
+
             SaveSystem.Instance.AddToStackedGold(newStackable.GetCurrentStackable().Value);
             newStackable.IsCollected = true;
             _stackables.Push(newStackable);
@@ -125,17 +128,20 @@ public class StackManager : MonoBehaviour, IEvents
 
         for (int i = countCollection - 1; i >= 0; i--)
         {
-            _stackables.Peek().transform.parent = null;
-            SaveSystem.Instance.AddToStackedGold(_stackables.Peek().GetCurrentStackable().Value * -1);
+            if (i >= trappedIndex) 
+            {
+                _stackables.Peek().transform.parent = null;
+                SaveSystem.Instance.AddToStackedGold(_stackables.Peek().GetCurrentStackable().Value * -1);
 
-            if(i > trappedIndex)
-            {
-                _stackables.Peek().IsCollected = false;
-                DotweenExtensions.ThrowObjectAway(_stackables.Pop().transform, new Vector2Int(0, 2), new Vector2(1.5f, 3f), new Vector2(-3f, 3f), new Vector2(12f, 16f));
-            }
-            else if(i == trappedIndex)
-            {
-                _stackables.Pop().DelayedDestroy();
+                if (i > trappedIndex)
+                {
+                    _stackables.Peek().IsCollected = false;
+                    DotweenExtensions.ThrowObjectAway(_stackables.Pop().transform, new Vector2Int(0, 2), new Vector2(1.5f, 3f), new Vector2(-3f, 3f), new Vector2(12f, 16f));
+                }
+                else if (i == trappedIndex)
+                {
+                    _stackables.Pop().DelayedDestroy();
+                }
             }
         }
     }

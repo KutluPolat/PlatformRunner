@@ -4734,9 +4734,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 741763741480612990, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.673996
+    - target: {fileID: 519107061813653228, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_Name
+      value: PitchTweakedAudioSource
       objectReference: {fileID: 0}
     - target: {fileID: 1679991404497731222, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: _platformMesh
@@ -4830,14 +4830,6 @@ PrefabInstance:
       propertyPath: _stackText
       value: 
       objectReference: {fileID: 526731103}
-    - target: {fileID: 2361498963820393671, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.673996
-      objectReference: {fileID: 0}
-    - target: {fileID: 2455606494946394388, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.673996
-      objectReference: {fileID: 0}
     - target: {fileID: 2659182074378258329, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: _carryPoint
       value: 
@@ -4858,6 +4850,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 10.300003
       objectReference: {fileID: 0}
+    - target: {fileID: 6089100056926585619, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_fontSize
+      value: 38.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219893224755967680, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_fontSize
+      value: 35.7
+      objectReference: {fileID: 0}
     - target: {fileID: 6336856578399458978, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_Name
       value: RestartButton
@@ -4869,6 +4869,10 @@ PrefabInstance:
     - target: {fileID: 8728485844805963787, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 6.673996
+      objectReference: {fileID: 0}
+    - target: {fileID: 9083242335280251818, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_fontSize
+      value: 28.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}

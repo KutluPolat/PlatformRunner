@@ -1019,11 +1019,31 @@ PrefabInstance:
     m_TransformParent: {fileID: 1679991405346644307}
     m_Modifications:
     - target: {fileID: 1163566353080310266, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
+      propertyPath: _collect
+      value: 
+      objectReference: {fileID: 8300000, guid: cf9f1aaa52420584ca14b3073a2149a0, type: 3}
+    - target: {fileID: 1163566353080310266, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
+      propertyPath: _targetPitch
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1163566353080310266, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
+      propertyPath: _upgradeFailed
+      value: 
+      objectReference: {fileID: 8300000, guid: ce2b9223c66074c43974a143f9b511ea, type: 3}
+    - target: {fileID: 1163566353080310266, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
+      propertyPath: _upgradeSucessfull
+      value: 
+      objectReference: {fileID: 8300000, guid: 83681215d22fac349a65abcb724ca5c3, type: 3}
+    - target: {fileID: 1163566353080310266, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
       propertyPath: _oneShotAudioSource
       value: 
       objectReference: {fileID: 6880860858163468862}
     - target: {fileID: 1163566353080310266, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
       propertyPath: _continiousAudioSource
+      value: 
+      objectReference: {fileID: 8139637663385302632}
+    - target: {fileID: 1163566353080310266, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
+      propertyPath: _oneShotPitchTweakedAudioSource
       value: 
       objectReference: {fileID: 8139637663385302632}
     - target: {fileID: 4830813912410589492, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
