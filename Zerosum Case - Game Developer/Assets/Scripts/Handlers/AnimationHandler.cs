@@ -57,6 +57,9 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
     private void HandleActionAnim(AnimState newAnimState)
     {
+        if (GameManager.Instance.IsGameStateEqualsTo(GameState.LevelEnd))
+            return;
+
         SetFlameTrailsState(false);
 
         switch (newAnimState)

@@ -37,8 +37,8 @@ public class FloatingMoneyController : ObjectPool
                 generatedFloatingMoneys.Add(GetObjectFromPool());
                 generatedFloatingMoneys[i].transform.localScale = Vector3.zero;
                 generatedFloatingMoneys[i].transform.position = _playerTransform.position;
-                generatedFloatingMoneys[i].transform.DOMove(GetRandomVisiblePosition(), targetDurationToGenerate).SetEase(Ease.OutBack);
-                generatedFloatingMoneys[i].transform.DOScale(Random.Range(_firstPhaseScale.x, _firstPhaseScale.y), targetDurationToGenerate).SetEase(Ease.OutBack);
+                generatedFloatingMoneys[i].transform.DOMove(GetRandomVisiblePosition(), durationPerPhase - targetDurationToGenerate * i).SetEase(Ease.OutBack);
+                generatedFloatingMoneys[i].transform.DOScale(Random.Range(_firstPhaseScale.x, _firstPhaseScale.y), durationPerPhase - targetDurationToGenerate * i).SetEase(Ease.OutBack);
                 GameManager.Instance.HapticHandler.MediumHaptic();
 
                 yield return new WaitForSeconds(targetDurationToGenerate);

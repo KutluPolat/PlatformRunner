@@ -1121,6 +1121,10 @@ PrefabInstance:
       propertyPath: FloatingMoneyController
       value: 
       objectReference: {fileID: 7938239298391382385}
+    - target: {fileID: 5988444957547904912, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
+      propertyPath: _levelLoadingType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8123834987179258315, guid: 8a154b4027318ef4a84394942d32fd92, type: 3}
       propertyPath: _vertDist
       value: 0.3

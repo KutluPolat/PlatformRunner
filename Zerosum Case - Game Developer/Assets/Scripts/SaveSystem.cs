@@ -100,7 +100,7 @@ public class SaveSystem : MonoBehaviour
 
     public void AddToStackedGold(float value)
     {
-        StackedGold += value;
+        StackedGold += value * IncomeUpgrades.IncomeMultiplier;
 
         if (value > 0)
             EventManager.Instance.OnGoldCollected();
