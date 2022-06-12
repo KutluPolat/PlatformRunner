@@ -85,7 +85,7 @@ public class UIController : MonoBehaviour, IEvents
     {
         _goldText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.TotalGold)}$";
         _stackText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.StackedGold)}";
-        _endStackText.text = $"{Mathf.FloorToInt(SaveSystem.Instance.StackedGold)}";
+        _endStackText.text = $"SCORE: {Mathf.FloorToInt(SaveSystem.Instance.StackedGold)}";
     }
 
     #endregion // Texts

@@ -195,6 +195,7 @@ public class EventManager : MonoBehaviour
     public void OnStateLevelEnd()
     {
         EventTrigger(StateLevelEnd, "OnStateLevelEnd");
+        SaveSystem.Instance.AddToTotalGold(SaveSystem.Instance.StackedGold);
     }
 
     #endregion // State

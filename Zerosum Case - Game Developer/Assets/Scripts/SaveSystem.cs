@@ -88,9 +88,13 @@ public class SaveSystem : MonoBehaviour
         TotalGold += value;
 
         if (value > 0)
+        {
             EventManager.Instance.OnGoldCollected();
+        }
         else
+        {
             EventManager.Instance.OnGoldLost();
+        }
     }
 
     public void AddToStackedGold(float value)

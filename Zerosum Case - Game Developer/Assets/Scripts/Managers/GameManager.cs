@@ -143,7 +143,6 @@ public class GameManager : MonoBehaviour, IEvents
         EventManager.Instance.StateInGame += () => SetGameStateTo(GameState.InGame);
         EventManager.Instance.StateEndingSequence += () => SetGameStateTo(GameState.EndingSequence);
         EventManager.Instance.StateLevelSuccess += () => SetGameStateTo(GameState.LevelSuccess);
-        EventManager.Instance.StateLevelFailed += () => SetGameStateTo(GameState.LevelFailed);
         EventManager.Instance.StateLevelEnd += () => SetGameStateTo(GameState.LevelEnd);
 
         EventManager.Instance.FeverModeOn += () => SetMovStateTo(MovementState.Fever);
@@ -156,7 +155,6 @@ public class GameManager : MonoBehaviour, IEvents
         EventManager.Instance.StateInGame -= () => SetGameStateTo(GameState.InGame);
         EventManager.Instance.StateEndingSequence -= () => SetGameStateTo(GameState.EndingSequence);
         EventManager.Instance.StateLevelSuccess -= () => SetGameStateTo(GameState.LevelSuccess);
-        EventManager.Instance.StateLevelFailed -= () => SetGameStateTo(GameState.LevelFailed);
         EventManager.Instance.StateLevelEnd -= () => SetGameStateTo(GameState.LevelEnd);
 
         EventManager.Instance.FeverModeOn -= () => SetMovStateTo(MovementState.Fever);

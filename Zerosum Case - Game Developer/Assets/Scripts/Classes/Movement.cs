@@ -145,7 +145,8 @@ public class Movement : MonoBehaviour, IEvents
 
         EventManager.Instance.PlayerTrapped += (value) => PushPlayerBack();
 
-        EventManager.Instance.StateEndingSequence += () => { _modelRigidbody.velocity = Vector3.zero; Destroy(this); };
+        EventManager.Instance.StateLevelSuccess += () => { _modelRigidbody.velocity = Vector3.zero; Destroy(this); };
+    
     }
 
     public void UnsubscribeEvents()
@@ -156,7 +157,7 @@ public class Movement : MonoBehaviour, IEvents
 
         EventManager.Instance.PlayerTrapped -= (value) => PushPlayerBack();
 
-        EventManager.Instance.StateEndingSequence += () => { _modelRigidbody.velocity = Vector3.zero; Destroy(this); };
+        EventManager.Instance.StateLevelSuccess += () => { _modelRigidbody.velocity = Vector3.zero; Destroy(this); };
     }
 
     #endregion // Events
