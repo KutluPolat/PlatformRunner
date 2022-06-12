@@ -5,37 +5,25 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Upgrade
 {
-    // Reuseable code
+    private const float PRICE_INCREMENT_RATE = 0.25f;
+    private const int DEFAULT_PRICE = 25;
 
-    private const float DEFAULT_PRICE = 25, PRICE_INCREMENT_RATE = 0.25f;
-    public float CurrentPrice;
-    public int Level;
-
-    public Upgrade()
-    {
-        CurrentPrice = CalculatePrice(Level);
-    }
+    public int CurrentPrice = DEFAULT_PRICE;
+    public int Level = 1;
 
     protected virtual bool TryUpgrade(float price)
     {
-        if(SaveSystem.Instance.TotalGold >= price)
+        if (SaveSystem.Instance.TotalGold >= price)
         {
             SaveSystem.Instance.AddToTotalGold(-price);
+            Level++;
+            CurrentPrice = Mathf.FloorToInt(CurrentPrice * (1 + PRICE_INCREMENT_RATE));
+
             return true;
         }
         else
         {
             return false;
         }
-    }
-
-    protected float CalculatePrice(int skillLevel)
-    {
-        return DEFAULT_PRICE + DEFAULT_PRICE * (Mathf.Clamp(skillLevel - 1, 0, Mathf.Infinity) * (1 + PRICE_INCREMENT_RATE));
-    }
-
-    public void Save(string saveName, Upgrade savedClass)
-    {
-        SaveSystemBinary<Upgrade>.Save(saveName, savedClass);
     }
 }

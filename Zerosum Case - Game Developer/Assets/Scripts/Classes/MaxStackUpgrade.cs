@@ -11,7 +11,7 @@ public class MaxStackUpgrade : Upgrade
     {
         if (base.TryUpgrade(CurrentPrice))
         {
-            MaxNumOfStack += 1;
+            MaxNumOfStack++;
             return true;
         }
         else

@@ -11,7 +11,7 @@ public class StartingStackUpgrade : Upgrade
     {
         if (base.TryUpgrade(CurrentPrice))
         {
-            StartingStack += 1;
+            StartingStack++;
             return true;
         }
         else

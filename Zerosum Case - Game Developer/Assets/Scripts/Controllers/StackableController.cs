@@ -123,8 +123,7 @@ public class StackableController : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                if (GameManager.Instance.IsMovStateEqualsTo(ComparerType.Or, MovementState.Fever, MovementState.FreeToMove))
-                    EventManager.Instance.OnStackCollected(this);
+                EventManager.Instance.OnStackCollected(this);
             }
         }
     }

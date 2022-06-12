@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour, IEvents
     [SerializeField, FoldoutGroup("Panels")] private GameObject _tapToPlayPanel, _successPanel, _inGamePanel, _failPanel, _endingPanel;
     [SerializeField, FoldoutGroup("Backgrounds")] Image _failBackground, _successBackground;
     [SerializeField, FoldoutGroup("Texts")] private TextMeshProUGUI _levelText, _goldText, _stackText, _endStackText;
-    [SerializeField, FoldoutGroup("Buttons")] private GameObject _maxStackUpgrade, _startingStackUpgrade, _incomeUpgrade;
+    [SerializeField] private UpgradeButtonAssignments _maxStackUpgrade, _startingStackUpgrade, _incomeUpgrade;
 
     #endregion // Variables
 
@@ -41,19 +41,35 @@ public class UIController : MonoBehaviour, IEvents
         switch (pressedButton)
         {
             case ButtonType.StartingStack:
-                button = _startingStackUpgrade;
+                button = _startingStackUpgrade.ButtonObject;
+                UpdateButton(SaveSystem.Instance.StartingStackUpgrades, _startingStackUpgrade);
                 break;
 
             case ButtonType.MaxStack:
-                button = _maxStackUpgrade;
+                button = _maxStackUpgrade.ButtonObject;
+                UpdateButton(SaveSystem.Instance.MaxStackUpgrades, _maxStackUpgrade);
                 break;
 
             case ButtonType.Income:
-                button = _incomeUpgrade;
+                button = _incomeUpgrade.ButtonObject;
+                UpdateButton(SaveSystem.Instance.IncomeUpgrades, _incomeUpgrade);
                 break;
         }
 
         DotweenExtensions.PunchScale(button.transform, DG.Tweening.Ease.OutBack, 1.3f, 1f, 0.25f);
+    }
+
+    private void UpdateAllButtons()
+    {
+        UpdateButton(SaveSystem.Instance.StartingStackUpgrades, _startingStackUpgrade);
+        UpdateButton(SaveSystem.Instance.MaxStackUpgrades, _maxStackUpgrade);
+        UpdateButton(SaveSystem.Instance.IncomeUpgrades, _incomeUpgrade);
+    }
+
+    private void UpdateButton(Upgrade upgrade, UpgradeButtonAssignments button)
+    {
+        button.TextLevel.text = $"{upgrade.Level} lvl";
+        button.TextPrice.text = $"{upgrade.CurrentPrice}$";
     }
 
     #endregion // Button Controls
@@ -80,6 +96,7 @@ public class UIController : MonoBehaviour, IEvents
     {
         OpenInGamePanel();
         _tapToPlayPanel.SetActive(true);
+        UpdateAllButtons();
     }
 
     private void OpenInGamePanel()
