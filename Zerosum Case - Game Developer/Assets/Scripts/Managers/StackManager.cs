@@ -43,7 +43,8 @@ public class StackManager : MonoBehaviour, IEvents
 
     private void CreateNewStack()
     {
-        StackableController stackableController = Instantiate(_moneyPrefab).GetComponent<StackableController>();
+        Vector3 spawnPos = GameManager.Instance.PlayerTransform.position + Random.insideUnitSphere * 2f;
+        StackableController stackableController = Instantiate(_moneyPrefab, spawnPos, Quaternion.identity).GetComponent<StackableController>();
         EventManager.Instance.OnStackCollected(stackableController);
     }
 
@@ -135,6 +136,15 @@ public class StackManager : MonoBehaviour, IEvents
     {
         _currentNumOfStack = SaveSystem.Instance.CurrentNumOfStack;
         IsStackFull = _currentNumOfStack >= SaveSystem.Instance.MaxNumOfStack;
+
+        if(IsStackFull && GameManager.Instance.IsMovStateEqualsTo(MovementState.FreeToMove))
+        {
+            EventManager.Instance.OnFeverModeOn();
+        }
+        else if(IsStackFull == false && GameManager.Instance.IsMovStateEqualsTo(MovementState.Fever))
+        {
+            EventManager.Instance.OnFeverModeOff();
+        }
     }
 
     #endregion // Methods

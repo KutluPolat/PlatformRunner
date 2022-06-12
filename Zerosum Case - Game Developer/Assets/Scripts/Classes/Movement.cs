@@ -10,11 +10,11 @@ public class Movement : MonoBehaviour, IEvents
     #region Variables
 
     [SerializeField, BoxGroup("Movement Properties")] protected float _highestVerticalSpeedLimit = 14f, _lowestVerticalSpeedLimit = 7f, _verticalMovementSpeed = 0.1f;
+    [SerializeField, BoxGroup("Movement Properties"), Min(1)] private float _feverMultiplier = 1.5f;
     [SerializeField, BoxGroup("Rotation Properties")] protected float _rotationUpAngle = 50f, _rotationSpeed = 0.02f;
 
     protected Rigidbody _modelRigidbody;
     protected Transform _modelTransform;
-    protected MovementState _currentMovementState;
     protected float _minimumLocalRotationY;
     protected bool _isRotationBlocked, _isHorizontalMovementBlocked;
 
@@ -58,9 +58,18 @@ public class Movement : MonoBehaviour, IEvents
 
     protected void MoveForward()
     {
-        if (GameManager.Instance.IsGameStateEqualsTo(GameState.InGame) && _currentMovementState == MovementState.FreeToMove)
+        if (GameManager.Instance.IsGameStateEqualsTo(GameState.InGame))
         {
-            _modelRigidbody.velocity = Vector3.Lerp(_modelRigidbody.velocity, Vector3.forward * _currentMaxVerticalMovementSpeed, _verticalMovementSpeed);
+            switch (GameManager.Instance.GetMovState())
+            {
+                case MovementState.FreeToMove:
+                    _modelRigidbody.velocity = Vector3.Lerp(_modelRigidbody.velocity, Vector3.forward * _currentMaxVerticalMovementSpeed, _verticalMovementSpeed);
+                    break;
+
+                case MovementState.Fever:
+                    _modelRigidbody.velocity = Vector3.Lerp(_modelRigidbody.velocity, Vector3.forward * _currentMaxVerticalMovementSpeed * _feverMultiplier, _verticalMovementSpeed);
+                    break;
+            }
         }
     }
 
@@ -90,11 +99,11 @@ public class Movement : MonoBehaviour, IEvents
 
     private void BlockMovement()
     {
-        _currentMovementState = MovementState.Blocked;
+        GameManager.Instance.SetMovStateTo(MovementState.Blocked);
     }
     private void UnblockMovement()
     {
-        _currentMovementState = MovementState.FreeToMove;
+        GameManager.Instance.SetMovStateTo(MovementState.FreeToMove);
     }
 
     #endregion // Movement

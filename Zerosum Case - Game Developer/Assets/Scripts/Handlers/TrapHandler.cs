@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TrapHandler : MonoBehaviour
 {
+    private StackableController _triggeredStackableControllerCache;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -13,7 +15,10 @@ public class TrapHandler : MonoBehaviour
         }
         else if (other.CompareTag("Stackable"))
         {
-            EventManager.Instance.OnStackableTrapped(other.GetComponent<StackableController>());
+            _triggeredStackableControllerCache = other.GetComponent<StackableController>();
+
+            if (_triggeredStackableControllerCache.IsCollected)
+                EventManager.Instance.OnStackableTrapped(_triggeredStackableControllerCache);
         }
     }
 }

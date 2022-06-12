@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour, IEvents
 
     #region Variables
 
+    public Transform PlayerTransform;
     [SerializeField, FoldoutGroup("Platform")] private MeshRenderer _platformMesh;
     [SerializeField, Min(0), FoldoutGroup("Platform")] private float _safeEdgeDistance = 0.5f;
 
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour, IEvents
     public const int NUM_OF_STACKABLE_TYPE = 3;
 
     private GameState _currentGameState;
+    private MovementState _currentMovementState;
 
     #endregion // Variables
 
@@ -62,6 +64,16 @@ public class GameManager : MonoBehaviour, IEvents
     #endregion // Initializations
 
     #region StateControls
+
+    public void SetMovStateTo(MovementState newState) => _currentMovementState = newState;
+    public bool IsMovStateEqualsTo(MovementState thisState)
+    {
+        return thisState == _currentMovementState;
+    }
+    public MovementState GetMovState()
+    {
+        return _currentMovementState;
+    }
 
     public void SetGameStateTo(GameState newState) => _currentGameState = newState;
     public bool IsGameStateEqualsTo(GameState thisState)
@@ -110,6 +122,9 @@ public class GameManager : MonoBehaviour, IEvents
         EventManager.Instance.StateLevelSuccess += () => SetGameStateTo(GameState.LevelSuccess);
         EventManager.Instance.StateLevelFailed += () => SetGameStateTo(GameState.LevelFailed);
         EventManager.Instance.StateLevelEnd += () => SetGameStateTo(GameState.LevelEnd);
+
+        EventManager.Instance.FeverModeOn += () => SetMovStateTo(MovementState.Fever);
+        EventManager.Instance.FeverModeOff += () => SetMovStateTo(MovementState.FreeToMove);
     }
 
     public void UnsubscribeEvents()
@@ -120,6 +135,9 @@ public class GameManager : MonoBehaviour, IEvents
         EventManager.Instance.StateLevelSuccess -= () => SetGameStateTo(GameState.LevelSuccess);
         EventManager.Instance.StateLevelFailed -= () => SetGameStateTo(GameState.LevelFailed);
         EventManager.Instance.StateLevelEnd -= () => SetGameStateTo(GameState.LevelEnd);
+
+        EventManager.Instance.FeverModeOn -= () => SetMovStateTo(MovementState.Fever);
+        EventManager.Instance.FeverModeOff -= () => SetMovStateTo(MovementState.FreeToMove);
     }
 
     #endregion // Events

@@ -50,7 +50,7 @@ public class EventManager : MonoBehaviour
     public event State StateTapToPlay, StateInGame, StateEndingSequence, StateLevelSuccess, StateLevelFailed, StateLevelEnd;
     public event Button PressedNextLevel, PressedRestart;
     public event UpgradeButton PressedUpgradeButton;
-    public event Movement MovementBlocked, MovementUnblocked;
+    public event Movement MovementBlocked, MovementUnblocked, FeverModeOn, FeverModeOff;
     public event StackableDelegate StackCollected;
     public event ExchangeDelegate StackableExchanged;
     public event GoldDelegate GoldCollected, GoldUpdated, GoldLost;
@@ -120,6 +120,16 @@ public class EventManager : MonoBehaviour
     #endregion // Stacks
 
     #region Movement
+
+    public void OnFeverModeOn()
+    {
+        EventTrigger(FeverModeOn, "OnFeverModeOn");
+    }
+
+    public void OnFeverModeOff()
+    {
+        EventTrigger(FeverModeOff, "OnFeverModeOff");
+    }
 
     public void OnMovementUnblocked()
     {

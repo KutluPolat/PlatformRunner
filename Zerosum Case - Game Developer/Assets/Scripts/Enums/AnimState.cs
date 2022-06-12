@@ -5,6 +5,7 @@ namespace Zerosum.PlatformRunner.Enums
         Idle,
         Dance,
         Run,
-        Stumble
+        Stumble,
+        Dash
     }
 }

@@ -37,6 +37,7 @@ public class InputController : MonoBehaviour
     public void OnPressedTapToPlayButton()
     {
         EventManager.Instance.OnStateInGame();
+        EventManager.Instance.OnStackUpdated();
     }
 
     private void HandleInput()

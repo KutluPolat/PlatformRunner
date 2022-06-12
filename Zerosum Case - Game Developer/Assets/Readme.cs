@@ -97,11 +97,11 @@
  *      +decreases after using upgrade button.
  *
  *  Start Stack Upgrade Button :
- *      Start stack represent the amount that our stack at start.
- *      Start stack start with 0 and increases by 1 with upgrade button on the tap to play screen. 
- *      Upgrade Button price increase exponentially on each purchase action.
- *      Start Stack amount must be remembered if game is closed and opened again.
- *      Upgrade Button price and level must be remembered if game is closed and opened again.
+ *      +Start stack represent the amount that our stack at start.
+ *      +Start stack start with 0 and increases by 1 with upgrade button on the tap to play screen. 
+ *      +Upgrade Button price increase exponentially on each purchase action.
+ *      +Start Stack amount must be remembered if game is closed and opened again.
+ *      +Upgrade Button price and level must be remembered if game is closed and opened again.
  *
  * !!You can define collectable values and upgrade prices by yourself.
  * !!There will be no fail condition.
@@ -131,11 +131,11 @@
  /* FAQ:
  * 
  * -What are we stacking?
- * We are collecting collectables and stacking its value.
+ * We are collecting collectables and stacking its value.??????
  *
  * -How stacks will be shown?
  * It will be shown as a bar ui that bind to the character and follows it. Assets are given but you can create an use your own visuals.
- * Do not try to use them as upper or front stacks.
+ * Do not try to use them as upper or front stacks. :D :D :D ;:D :D
  *
  * -What happens when we collect or lost a stack collectable?
  *  If collected bar will be filled, if lost bar will be unfilled.

@@ -52,7 +52,7 @@ public class MovementController : Movement
         if (GameManager.Instance.IsGameStateEqualsTo(GameState.InGame))
         {
             AddToQueue(horizontalDeltaPosition);
-            _modelRigidbody.velocity = new Vector3(horizontalDeltaPosition * _horizontalMovementSpeed * (int)_currentMovementState, 0, _modelRigidbody.velocity.z);
+            _modelRigidbody.velocity = new Vector3(horizontalDeltaPosition * _horizontalMovementSpeed * (int)GameManager.Instance.GetMovState(), 0, _modelRigidbody.velocity.z);
         }
     }
 

@@ -14,8 +14,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
     [SerializeField] private Movement _movement;
     [SerializeField, SceneObjectsOnly] private Animator _rotAnim, _movAnim;
 
-    private int _maxNumOfStack = 1, _currentNumOfStack;
-    private float _currentIdleAction, _currentAction;
+    private float _currentIdleAction, _currentAction, _currentRun;
 
     private bool IsRunning
     {
@@ -45,7 +44,6 @@ public class AnimationHandler : MonoBehaviour, IEvents
     private void LateUpdate()
     {
         HandleRotAnim();
-        HandleMovAnim();
         UpdateMovAnimParameters();
     }
 
@@ -55,8 +53,6 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
     private void HandleRotAnim() => _rotAnim.SetFloat("AvgInput", _movement.GetAverageOfLatestInputs());
 
-    private void HandleMovAnim() => _movAnim.SetFloat("Run", _currentNumOfStack / (float)_maxNumOfStack);
-
     private void HandleActionAnim(AnimState newAnimState)
     {
         switch (newAnimState)
@@ -65,7 +61,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
                 CurrentAnimState = AnimState.Idle;
                 IsRunning = false;
-                DOValues(0, 0);
+                DOValues(0, 0, 0);
 
                 break;
 
@@ -73,7 +69,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
                 CurrentAnimState = AnimState.Dance;
                 IsRunning = false;
-                DOValues(1, 0);
+                DOValues(1, 0, 0);
 
                 break;
 
@@ -81,6 +77,15 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
                 CurrentAnimState = AnimState.Run;
                 IsRunning = true;
+                DOValues(0, 0, 1);
+
+                break;
+
+            case AnimState.Dash:
+
+                CurrentAnimState = AnimState.Dash;
+                IsRunning = true;
+                DOValues(0, 0, 2);
 
                 break;
 
@@ -88,7 +93,7 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
                 CurrentAnimState = AnimState.Stumble;
                 IsRunning = false;
-                DOValues(2, 1);
+                DOValues(2, 1, 0);
 
                 break;
 
@@ -97,22 +102,18 @@ public class AnimationHandler : MonoBehaviour, IEvents
         } 
     }
 
-    private void DOValues(float endIdleAction, float endAction)
+    private void DOValues(float endIdleAction, float endAction, float run)
     {
         DOTween.To(() => _currentIdleAction, x => _currentIdleAction = x, endIdleAction, _animationBlendDuration);
         DOTween.To(() => _currentAction, x => _currentAction = x, endAction, _animationBlendDuration);
+        DOTween.To(() => _currentRun, x => _currentRun = x, run, _animationBlendDuration);
     }
 
     private void UpdateMovAnimParameters()
     {
         _movAnim.SetFloat("IdleAction", _currentIdleAction);
         _movAnim.SetFloat("Action", _currentAction);
-    }
-
-    private void UpdateParameters()
-    {
-        _maxNumOfStack = SaveSystem.Instance.MaxNumOfStack;
-        _currentNumOfStack = SaveSystem.Instance.CurrentNumOfStack;
+        _movAnim.SetFloat("Run", _currentRun);
     }
 
     #endregion // Methods
@@ -126,20 +127,22 @@ public class AnimationHandler : MonoBehaviour, IEvents
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.StackUpdated += UpdateParameters;
         EventManager.Instance.StateInGame += () => { IsRunning = true; };
         EventManager.Instance.PlayerTrapped += (value) => HandleActionAnim(AnimState.Stumble);
         EventManager.Instance.MovementUnblocked += () => HandleActionAnim(AnimState.Run);
         EventManager.Instance.StateLevelSuccess += () => HandleActionAnim(AnimState.Dance);
+        EventManager.Instance.FeverModeOn += () => HandleActionAnim(AnimState.Dash);
+        EventManager.Instance.FeverModeOff += () => HandleActionAnim(AnimState.Run);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.StackUpdated -= UpdateParameters;
         EventManager.Instance.StateInGame -= () => { IsRunning = true; };
         EventManager.Instance.PlayerTrapped -= (value) => HandleActionAnim(AnimState.Stumble);
         EventManager.Instance.MovementUnblocked -= () => HandleActionAnim(AnimState.Run);
         EventManager.Instance.StateLevelSuccess -= () => HandleActionAnim(AnimState.Dance);
+        EventManager.Instance.FeverModeOn -= () => HandleActionAnim(AnimState.Dash);
+        EventManager.Instance.FeverModeOff -= () => HandleActionAnim(AnimState.Run);
     }
 
     #endregion // Events
