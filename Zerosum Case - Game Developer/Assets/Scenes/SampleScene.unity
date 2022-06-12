@@ -4796,11 +4796,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876154, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1e-45
+      value: -3e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876154, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405370876157, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_Follow
@@ -4812,11 +4812,11 @@ PrefabInstance:
       objectReference: {fileID: 1782444530}
     - target: {fileID: 1679991405730531186, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1e-45
+      value: -3e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405730531186, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 1679991405878575758, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
       propertyPath: _movementController
@@ -4834,6 +4834,26 @@ PrefabInstance:
       propertyPath: _filledBar
       value: 
       objectReference: {fileID: 870929248}
+    - target: {fileID: 3534256705658654216, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_Color.a
+      value: 0.35686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534256705658654216, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_Color.b
+      value: 0.019565582
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534256705658654216, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534256705658654216, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6336856578399458978, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
+      propertyPath: m_Name
+      value: RestartButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5a222c465b9cbb4d85c998c6b366432, type: 3}
 --- !u!1001 &2683338964907280851

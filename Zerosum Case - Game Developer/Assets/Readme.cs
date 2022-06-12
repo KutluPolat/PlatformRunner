@@ -23,7 +23,7 @@
  * 
  *      It includes ;
  *      -Game Title (You can choose your own)
- *      -Tap To Play Button?? and Text
+ *      +-Tap To Play Button and Text
  *      -Current Level Number
  *      -Currency Amount
  *      -Start Stack Upgrade Button & Price

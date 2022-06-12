@@ -77,8 +77,7 @@ public class UIController : MonoBehaviour, IEvents
 
     private void OpenTapToPlayPanel()
     {
-        CloseAllPanels();
-
+        OpenInGamePanel();
         _tapToPlayPanel.SetActive(true);
     }
 
